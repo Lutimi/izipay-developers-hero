@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/", "destination": "/izipay-hero-v4.html" }]
+}

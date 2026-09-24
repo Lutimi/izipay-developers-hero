@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Izipay Developers · Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Nunito+Sans:wght@200;300;500;700&family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:#fff}
+
+/* =====================================================================
+   HERO IZIPAY DEVELOPERS
+   Todo lleva prefijo izp- salvo el bloque de la pasarela, que va
+   encapsulado bajo .izp-gw para no chocar con los estilos del sitio.
+   ===================================================================== */
+.izp-section{
+  --teal:#0e8584;--teal-2:#14a39f;--teal-d:#0b6f6e;--ink:#1b2528;--mut:#5d6b70;--bg:#eef7f7;
+  position:relative;overflow:hidden;font-family:Roboto,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg);
+  height:clamp(660px,52vw,860px)}
+.izp-section *{box-sizing:border-box}
+
+/* ---------------------------------------------------------------- escena */
+.izp-scene{position:absolute;inset:0;overflow:hidden;-webkit-user-select:none;user-select:none}
+.izp-stage{position:absolute;left:0;top:0;width:1200px;height:760px;transform-origin:0 0}
+/* tamaño del conjunto (equipo, taza, planta, tarjetas) sin tocar pared ni mesa:
+   el origen cae sobre la línea de la mesa para que la base siga apoyada */
+.izp-props{position:absolute;inset:0;transform:scale(var(--props,.8));transform-origin:760px 640px}
+
+/* pared: luz de ventana cayendo desde arriba a la derecha */
+.izp-wall{position:absolute;inset:0;background:
+  radial-gradient(38% 46% at 82% 8%,rgba(255,255,255,.98),rgba(255,255,255,0) 72%),
+  radial-gradient(70% 60% at 18% 90%,rgba(96,140,146,.28),rgba(96,140,146,0) 70%),
+  linear-gradient(176deg,#e4f2f2 0%,#cfe6e6 48%,#bcd9da 78%,#aecfd1 100%)}
+/* mancha de humedad / textura muy sutil para que la pared no sea un degradado plano */
+.izp-wall:after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;background:
+  radial-gradient(28% 34% at 12% 22%,rgba(120,150,155,.16),transparent 70%),
+  radial-gradient(22% 26% at 46% 6%,rgba(120,150,155,.12),transparent 70%)}
+
+.izp-window{position:absolute;right:-70px;top:-90px;width:560px;height:600px;opacity:.5;filter:blur(22px);
+  background:
+   linear-gradient(90deg,transparent 0 45.4%,rgba(112,162,164,.5) 45.4% 49%,transparent 49%),
+   linear-gradient(180deg,transparent 0 43.6%,rgba(112,162,164,.5) 43.6% 47%,transparent 47%),
+   linear-gradient(158deg,#fff 0%,rgba(255,255,255,.28) 100%);
+  transform:skewX(-10deg)}
+/* haz de luz volumétrico desde la ventana hacia el escritorio */
+.izp-shaft{position:absolute;right:-40px;top:-120px;width:760px;height:860px;pointer-events:none;opacity:.5;
+  background:linear-gradient(196deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.12) 38%,rgba(255,255,255,0) 62%);
+  filter:blur(26px);transform:skewX(-14deg)}
+
+/* ---------------------------------------------------------------- escritorio */
+.izp-desk{position:absolute;left:0;right:0;top:637px;bottom:0;
+  background:linear-gradient(180deg,#93a9a9 0%,#7a9091 34%,#61797a 68%,#516868 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 14%,#000 30%);mask-image:linear-gradient(90deg,transparent 0,transparent 14%,#000 30%)}
+.izp-narrow .izp-desk{-webkit-mask-image:none;mask-image:none}
+/* canto del tablero: se enciende solo donde llega la luz de la ventana */
+.izp-desk:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent 0 24%,rgba(255,255,255,.34) 58%,rgba(255,255,255,.52) 84%,rgba(255,255,255,.18) 100%)}
+/* luz de la ventana sobre la mesa + rebote del monitor */
+.izp-desk:after{content:"";position:absolute;inset:0;background:
+  linear-gradient(104deg,transparent 0 48%,rgba(255,255,255,.16) 66%,rgba(255,255,255,.02) 80%,transparent 88%),
+  radial-gradient(42% 78% at 74% -6%,rgba(255,255,255,.4),transparent 72%),
+  radial-gradient(34% 56% at 52% 4%,rgba(20,163,159,.16),transparent 72%),
+  radial-gradient(60% 90% at 6% 100%,rgba(13,72,72,.28),transparent 72%)}
+/* micro-grano del tablero: evita el look de degradado CSS */
+.izp-grain,.izp-desk .izp-tex{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px}
+.izp-desk .izp-tex{position:absolute;inset:0;opacity:.22;mix-blend-mode:overlay}
+
+/* capas de acabado sobre toda la escena */
+.izp-grain{position:absolute;inset:0;z-index:18;pointer-events:none;opacity:.05;mix-blend-mode:overlay}
+/* etalonaje: se queda dentro de la paleta izipay (luces neutras, sombras teal, nada de azul marino) */
+.izp-grade{position:absolute;inset:0;z-index:14;pointer-events:none;mix-blend-mode:soft-light;
+  background:linear-gradient(203deg,rgba(255,253,246,.3) 0%,rgba(255,255,255,0) 48%,rgba(11,111,110,.28) 100%)}
+/* transición hacia el texto: corta y limpia. Si se alarga, lava de blanco los objetos
+   que caen dentro (el asa de la taza) y se pierde la paleta. */
+.izp-fade{position:absolute;inset:0;pointer-events:none;z-index:15;
+  background:linear-gradient(90deg,var(--bg) 0%,var(--bg) 17%,rgba(238,247,247,.86) 23%,rgba(238,247,247,.3) 28%,rgba(238,247,247,0) 32%)}
+.izp-vignette{position:absolute;inset:0;pointer-events:none;z-index:16;background:
+  radial-gradient(86% 86% at 68% 42%,transparent 55%,rgba(16,52,58,.2) 100%),
+  linear-gradient(180deg,rgba(255,255,255,.14),transparent 22%)}
+
+/* ---------------------------------------------------------------- MacBook (PSD)
+   El mockup es frontal, así que la escena no lleva perspectiva: la cámara está
+   a la altura de la pantalla. El rect del display son las medidas exactas del
+   smart object "Screen" dentro de la capa "MacBook" del PSD, en porcentaje, y
+   los reflejos son la capa "Highlights" original, que allí va en modo screen. */
+/* el equipo pasa a ser el objeto principal: el display tiene que dar para
+   el editor y el navegador a la vez sin encoger la letra */
+.izp-mac{position:absolute;left:236px;top:66px;width:900px;height:575px}
+.izp-mac img{display:block;pointer-events:none;-webkit-user-drag:none}
+.izp-mac .dev{position:absolute;inset:0;width:100%;height:100%}
+/* sombra de contacto: va antes que el equipo para quedar detrás */
+.izp-mac .shd{position:absolute;left:-5%;right:-5%;bottom:-12px;height:48px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(6,24,28,.52),transparent 78%);filter:blur(13px)}
+/* reflejo sobre el tablero: el mismo render volteado y desvanecido */
+.izp-mac .refl{position:absolute;left:0;top:100%;width:100%;height:100%;opacity:.15;filter:blur(2.5px);
+  transform:scaleY(-1);transform-origin:50% 0;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 32%);mask-image:linear-gradient(180deg,#000,transparent 32%)}
+.izp-display{position:absolute;left:8.078%;top:2.895%;width:83.914%;height:85.134%;overflow:hidden;background:#141b22;
+  -webkit-mask:url(assets/hero/macbook-mask.png) center/100% 100% no-repeat;
+          mask:url(assets/hero/macbook-mask.png) center/100% 100% no-repeat}
+/* la muesca la pinta la capa del equipo, que queda debajo del contenido */
+.izp-display .notch{position:absolute;left:50%;top:0;width:12.4%;height:4.1%;margin-left:-6.2%;
+  border-radius:0 0 8px 8px;background:#0a0d10;z-index:5}
+
+/* --------------------------------------------- escritorio dentro de la pantalla
+   El formulario vive donde le toca: en el navegador del mismo equipo, al
+   lado del editor. Las dos superficies usan zoom y no scale, porque zoom
+   maqueta y rasteriza ya al tamano final y el texto no se resampla. */
+.izp-os{position:absolute;inset:0;background:
+  radial-gradient(120% 95% at 74% 10%,#1d545b 0%,#12333c 50%,#0b1c23 100%)}
+.izp-menubar{position:absolute;left:0;right:0;top:0;height:20px;z-index:1;
+  display:flex;align-items:center;gap:15px;padding:0 13px;background:rgba(8,18,24,.5);
+  font:500 10px/1 Roboto,Arial,sans-serif;color:rgba(224,240,242,.7)}
+.izp-menubar b{font-weight:700;color:rgba(235,248,249,.92)}
+.izp-menubar .rt{margin-left:auto;letter-spacing:.06em}
+
+.izp-w{position:absolute;border-radius:10px;overflow:hidden;
+  box-shadow:0 34px 64px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08)}
+.izp-w .bar{position:relative;z-index:2;display:flex;align-items:center;gap:6px;padding:0 10px}
+.izp-w .bar i{flex:none;width:7.5px;height:7.5px;border-radius:50%}
+.izp-w .bar i:nth-child(1){background:#ff5f57}
+.izp-w .bar i:nth-child(2){background:#febc2e}
+.izp-w .bar i:nth-child(3){background:#28c840}
+.izp-w .in{position:absolute;left:0;right:0;bottom:0;overflow:hidden}
+
+.izp-w-ide{left:14px;top:32px;width:500px;height:342px;z-index:2;background:#151c24}
+.izp-w-ide .bar{height:18px;background:#222c35;font:500 9.5px/1 Roboto,Arial,sans-serif;color:#8ba0aa}
+.izp-w-ide .bar span{margin-left:7px}
+.izp-w-ide .in{top:18px}
+
+.izp-w-gw{left:402px;top:18px;width:326px;height:452px;z-index:3;background:#eef3f4}
+.izp-w-gw .bar{height:20px;background:#dde6e9}
+.izp-w-gw .url{margin-left:8px;flex:1 1 0;min-width:0;height:12.5px;border-radius:7px;background:#fff;
+  display:flex;align-items:center;padding:0 7px;overflow:hidden;white-space:nowrap;
+  font:500 8.5px/1 Roboto,Arial,sans-serif;color:#6d818a}
+.izp-w-gw .in{top:20px}
+.izp-mac .glass{position:absolute;left:8.078%;top:2.895%;width:83.914%;height:85.134%;
+  mix-blend-mode:screen;opacity:.85}
+/* derrame de luz de la pantalla sobre la mesa */
+.izp-screenglow{position:absolute;left:330px;top:596px;width:740px;height:130px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(40,200,190,.2),transparent);filter:blur(16px)}
+
+/* ---------------------------------------------------------------- pantalla: IDE */
+/* zoom (no scale): así el texto se maqueta y rasteriza ya en su tamaño final y sale nítido */
+/* zoom (no scale): el texto se maqueta y rasteriza ya en su tamaño final.
+   Lo único que mejora la nitidez de aquí en adelante es que las letras sean
+   físicamente más grandes, así que el IDE va con menos cromo y menos líneas. */
+.izp-screen{position:absolute;left:0;top:0;width:800px;height:519px;zoom:.625;
+  display:grid;grid-template-columns:40px 140px 1fr;grid-template-rows:32px 1fr 126px 22px;background:#151c24;
+  font-family:"JetBrains Mono",Consolas,"DejaVu Sans Mono",monospace}
+.sc-act{grid-column:1;grid-row:1/4;background:#111820;border-right:1px solid #1f2a33;
+  display:flex;flex-direction:column;align-items:center;gap:16px;padding-top:14px}
+.sc-act i{width:18px;height:18px;border-radius:4px;border:1.8px solid #4a5b68;display:block}
+.sc-act i.on{border-color:#cfe4e6}
+.sc-side{grid-column:2;grid-row:1/4;background:#121a22;border-right:1px solid #1f2a33;padding:11px 0 0;
+  font:13px/1 Roboto,Arial,sans-serif;color:#7b8f9b;overflow:hidden}
+.sc-side h6{margin:0 0 9px 12px;font:600 11px/1 Roboto,Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5d7280}
+.sc-side b{display:block;padding:5px 0 5px 12px;font-weight:500;color:#91a7b3}
+.sc-side b:before{content:"▾ ";color:#54687a}
+.sc-side span{display:block;padding:5px 0 5px 26px}
+.sc-side span.on{background:#1b2732;color:#e3f1f3;box-shadow:inset 2px 0 0 var(--teal-2)}
+.sc-tabs{grid-column:3;grid-row:1;display:flex;align-items:stretch;background:#111820;border-bottom:1px solid #1f2a33;
+  font:14px/1 Roboto,Arial,sans-serif;color:#7f93a0}
+.sc-tabs span{display:flex;align-items:center;gap:7px;padding:0 15px;border-right:1px solid #1f2a33}
+.sc-tabs span:before{content:"";width:8px;height:8px;border-radius:2px;background:#e8c547}
+.sc-tabs span.on{background:#151c24;color:#e8f1f7;box-shadow:inset 0 -2px 0 var(--teal-2)}
+.sc-code{grid-column:3;grid-row:2;padding:10px 0 0;font-size:18px;line-height:24px;color:#d4d4d4;overflow:hidden}
+.ln{display:flex;white-space:pre;height:24px}
+.ln .n{flex:none;width:52px;padding-right:16px;text-align:right;color:#4d5b68}
+.ln.hl{background:rgba(20,163,159,.13)}
+.ln.hl .n{color:#b9cdd3}
+/* tokens del resaltado: acotados a la superficie de código. Sueltos son
+   letras sueltas y chocan con clases de la UI (.f de campo con foco, p. ej.) */
+.sc-code{
+  --k:#c586c0;--f:#dcdcaa;--s:#ce9178;--v:#9cdcfe;--m:#b5cea8;--c:#6a9955;--t:#4ec9b0;--p:#d4d4d4;
+}
+.sc-code .k{color:var(--k)}
+.sc-code .f{color:var(--f)}
+.sc-code .s{color:var(--s)}
+.sc-code .v{color:var(--v)}
+.sc-code .m{color:var(--m)}
+.sc-code .c{color:var(--c)}
+.sc-code .t{color:var(--t)}
+.sc-code .p{color:var(--p)}
+.ty{display:inline-block;overflow:hidden;vertical-align:top;width:0;animation:izp-type var(--d,.4s) steps(var(--c,20),end) var(--dl,0s) forwards}
+@keyframes izp-type{to{width:calc(var(--c,20) * 1ch)}}
+.cur{display:inline-block;width:1.6px;height:15px;margin-top:3px;background:#aeafad;animation:izp-blink 1s steps(1) infinite}
+@keyframes izp-blink{50%{opacity:0}}
+.sc-term{grid-column:3;grid-row:3;border-top:1px solid #1f2a33;background:#111820;padding:7px 16px;
+  font-size:15px;line-height:21px;color:#c2d2d8;overflow:hidden}
+.sc-term .h{display:flex;gap:18px;font:12px/1 Roboto,Arial,sans-serif;color:#677d8a;margin-bottom:6px}
+.sc-term .h span.on{color:#e8f1f7;box-shadow:inset 0 -1px 0 var(--teal-2);padding-bottom:3px}
+.sc-term div.row{white-space:pre;opacity:0;animation:izp-in .25s ease forwards}
+@keyframes izp-in{to{opacity:1}}
+.sc-term .g{color:#4ec9b0}.sc-term .y{color:#dcdcaa}.sc-term .d{color:#63757f}
+.sc-bar{grid-column:1/4;grid-row:4;display:flex;gap:18px;align-items:center;padding:0 12px;background:var(--teal);color:#e9fbfa;
+  font:12px/1 Roboto,Arial,sans-serif}
+.sc-bar span:last-child{margin-left:auto}
+
+/* ---------------------------------------------------------------- tarjetas flotantes */
+.izp-card{position:absolute;background:rgba(255,255,255,.97);border-radius:16px;z-index:10;color:var(--ink);
+  box-shadow:0 30px 56px -26px rgba(10,48,54,.6),0 3px 10px rgba(12,70,76,.1),0 0 0 .5px rgba(255,255,255,.7) inset;
+  will-change:transform}
+.izp-toast{left:300px;top:470px;width:232px;padding:14px 16px;display:flex;gap:13px;align-items:center}
+.izp-ok{flex:none;width:42px;height:42px;border-radius:12px;background:var(--teal);display:grid;place-items:center}
+.izp-ok svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20}
+.izp-toast.pop .izp-ok{animation:izp-pop .5s ease-out}
+.izp-toast.pop .izp-ok svg{animation:izp-draw .5s ease-out .1s both}
+@keyframes izp-pop{0%{transform:scale(.72)}55%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes izp-draw{from{stroke-dashoffset:20}to{stroke-dashoffset:0}}
+.izp-t1{font-size:13px;line-height:1.25}
+.izp-t2{font-size:19px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
+.izp-t3{font-size:11.5px;line-height:1.3;color:var(--mut)}
+.izp-api{left:880px;top:598px;width:224px;padding:14px 16px}
+.izp-api .izp-t1{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;font-weight:500}
+.izp-st{margin-top:9px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.izp-dot{width:9px;height:9px;border-radius:50%;background:var(--teal-2);animation:izp-ping 1.6s ease-out infinite}
+@keyframes izp-ping{0%{box-shadow:0 0 0 0 rgba(20,163,159,.55)}70%,100%{box-shadow:0 0 0 8px rgba(20,163,159,0)}}
+.izp-ms{margin-left:auto;font-size:11px;font-weight:400;color:var(--mut);font-variant-numeric:tabular-nums}
+.izp-key{left:432px;top:604px;width:auto;padding:12px 18px 12px 12px;display:flex;gap:12px;align-items:center}
+.izp-ok.sm{width:36px;height:36px;border-radius:50%}
+.izp-ok.sm svg{width:18px;height:18px}
+
+/* ---------------------------------------------------------------- planta */
+.izp-plant{position:absolute;left:1102px;top:186px;width:234px;height:420px;filter:blur(1.9px) saturate(.9) brightness(.84)}
+/* las hojas viven en el sprite: la escena que no toca está en display:none y
+   <use> no cruza esa frontera si el original cuelga de ella */
+.izp-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.izp-plant use,.izm-plant use{transform-origin:100px 262px;animation:izp-sway 7s ease-in-out infinite}
+@keyframes izp-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.4deg)}}
+.izp-plant-sh{position:absolute;left:1126px;top:588px;width:190px;height:38px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(8,26,30,.5),transparent);filter:blur(6px)}
+
+/* ---------------------------------------------------------------- taza */
+/* la escala va en la propiedad scale, no en transform: el paralaje escribe
+   transform en las capas con data-depth y lo borraria */
+.izp-mug{position:absolute;left:300px;top:545px;scale:.72;transform-origin:0 100%;width:170px;height:200px;filter:blur(.45px)}
+/* dos sombras: la difusa del ambiente y la oclusión pegada a la base */
+.izp-mug .sh{position:absolute;left:-30px;bottom:-16px;width:242px;height:44px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(4,14,17,.66),transparent 78%);filter:blur(7px)}
+.izp-mug .sh:after{content:"";position:absolute;left:24px;bottom:12px;width:190px;height:22px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(2,9,12,.85),transparent);filter:blur(2.5px)}
+
+/* asa: borde sólido (nada de máscaras, dan alfa parcial y la aclaran) + dos anillos
+   superpuestos que simulan el cilindro: filo de luz arriba-izquierda, sombra abajo */
+.izp-mug .handle{position:absolute;left:-55px;top:40px;width:84px;height:112px;border-radius:56px 0 0 56px;
+  border:17px solid #0f161d;border-right:none;
+  box-shadow:-4px 2px 8px rgba(0,0,0,.5)}
+.izp-mug .handle:before{content:"";position:absolute;left:-17px;top:-17px;right:-17px;bottom:-17px;
+  border-radius:inherit;border:17px solid transparent;border-right:none;
+  border-top-color:rgba(200,242,240,.24);border-left-color:rgba(200,242,240,.11)}
+.izp-mug .handle span{position:absolute;left:-17px;top:-17px;right:-17px;bottom:-17px;
+  border-radius:inherit;border:17px solid transparent;border-right:none;
+  border-bottom-color:rgba(0,0,0,.5)}
+
+/* cuerpo: cilindro con núcleo de sombra desplazado y rebote del escritorio */
+.izp-mug .body{position:absolute;left:0;top:14px;width:170px;height:186px;border-radius:0 0 50% 50%/0 0 26px 26px;
+  background:linear-gradient(90deg,#05080b 0%,#131a22 11%,#27323d 26%,#3a4753 36%,#222d38 54%,#121920 72%,#080c10 88%,#03050700 100%),
+             linear-gradient(90deg,#05080b,#0b1015);
+  display:grid;place-items:center;overflow:hidden}
+.izp-mug .logo{font:700 46px/1 "JetBrains Mono",Consolas,monospace;color:#1bb6ae;letter-spacing:-2px;
+  text-shadow:0 0 14px rgba(27,182,174,.4);transform:scaleX(.92) translateY(4px)}
+/* especular estrecho y brillante: es lo que lee como cerámica esmaltada */
+.izp-mug .gloss{position:absolute;left:19%;top:-4%;width:13%;height:108%;border-radius:50%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.42) 45%,rgba(255,255,255,.55) 55%,transparent);
+  filter:blur(3.5px)}
+/* luz rebotada: turquesa de la pantalla por la derecha; abajo va oscuro, no claro */
+.izp-mug .bounce{position:absolute;inset:0;
+  background:linear-gradient(272deg,rgba(66,214,205,.2),transparent 26%),
+             linear-gradient(0deg,rgba(2,6,9,.55),transparent 16%)}
+/* base: curva de apoyo, fundida con el cuerpo para que no parezca un disco aparte */
+.izp-mug .foot{position:absolute;left:2px;bottom:-7px;width:166px;height:18px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(5,9,12,.9),rgba(3,6,8,.98));filter:blur(1.6px)}
+
+/* borde: labio exterior con grosor + superficie del café */
+.izp-mug .rim{position:absolute;left:0;top:0;width:170px;height:30px;border-radius:50%;
+  background:linear-gradient(100deg,#3c4956 0%,#2a343e 40%,#1b232b 100%);
+  box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.izp-mug .rim .lip{position:absolute;left:5px;top:2px;width:160px;height:26px;border-radius:50%;
+  background:linear-gradient(100deg,#0e141a,#161e26);box-shadow:inset 0 1.5px 0 rgba(214,248,246,.22)}
+.izp-mug .rim .coffee{position:absolute;left:10px;top:4px;width:150px;height:22px;border-radius:50%;
+  background:radial-gradient(64% 72% at 54% 60%,#56331d 0%,#2d1a10 68%,#140b06 100%);
+  box-shadow:inset 0 5px 8px rgba(0,0,0,.7)}
+/* reflejo de la ventana sobre el café */
+.izp-mug .rim .coffee:after{content:"";position:absolute;left:52%;top:14%;width:34%;height:34%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,240,214,.3),transparent);filter:blur(3px)}
+.izp-steam{position:absolute;top:-70px;width:14px;height:80px;border-radius:14px;background:linear-gradient(transparent,rgba(255,255,255,.8));
+  filter:blur(6px);opacity:0;animation:izp-steam 3.6s ease-in infinite}
+@keyframes izp-steam{0%{transform:translateY(30px) scaleX(.6);opacity:0}40%{opacity:.62}100%{transform:translateY(-40px) scaleX(1.5) rotate(8deg);opacity:0}}
+
+/* =====================================================================
+   PASARELA DE PAGO REAL (izipay-pasarela-pago.html)
+   Encapsulada bajo .izp-gw y escalada para entrar en la escena.
+   ===================================================================== */
+.izp-gw-wrap{position:absolute;left:0;top:0;width:500px;height:664px;zoom:.6506}
+.izp-gw-tilt{width:100%;height:100%;perspective:1600px}
+.izp-gw{
+  --neutro:#373737;--neutral40:#a0a0a0;--neutral30:#767676;--aqua:#00a09d;--apple-black:#000;
+  /* el ancho ya no es fijo: el margen lateral y la separacion de los metodos
+     salen de estas dos medidas, y el movil solo tiene que rebajarlas */
+  --gwpad:40px;--gwgap:16px;
+  --gwfont:"Museo Sans","Nunito Sans",-apple-system,"Segoe UI",Arial,sans-serif;
+  position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:stretch;
+  background:#fff;border-radius:6px;overflow:hidden;font-family:var(--gwfont);color:var(--neutro);text-align:left;
+  transform:none;
+  box-shadow:none}
+.izp-gw *{box-sizing:border-box}
+/* la misma luz de la escena cayendo sobre la tarjeta: sin esto se ve pegada encima */
+.izp-gw:after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(200deg,rgba(10,46,52,0) 62%,rgba(10,46,52,.05) 100%)}
+
+/* header */
+.izp-gw .head{position:relative;height:76px;flex:none;background:#fff}
+.izp-gw .head .rule{position:absolute;left:var(--gwpad);right:var(--gwpad);bottom:0;height:1px;
+  background:repeating-linear-gradient(to right,var(--neutral40) 0 2px,transparent 2px 4px)}
+.izp-gw .head .lang{position:absolute;left:var(--gwpad);top:29px;margin:0;font-size:12px;font-weight:500;line-height:normal}
+.izp-gw .head .lang b{font-weight:700}
+.izp-gw .head .lang i{font-style:normal;font-weight:200}
+.izp-gw .head .order-t{position:absolute;right:calc(var(--gwpad) + 8px);top:32px;margin:0;font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.izp-gw .head .order-n{position:absolute;right:calc(var(--gwpad) + 8px);top:51px;margin:0;font-size:12px;font-weight:300;text-align:right;white-space:nowrap}
+.izp-gw .head .close{position:absolute;right:8px;top:8px;width:24px;height:24px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.izp-gw .head .close img{width:21px;height:21px;display:block}
+.izp-gw .logo-company{position:absolute;left:var(--gwpad);top:48px;height:18px;display:flex;align-items:center;gap:10px}
+.izp-gw .logo-company .mark{position:relative;width:18px;height:18px;flex:none}
+.izp-gw .logo-company .mark img:first-child{position:absolute;left:0;top:0;width:18px;height:18px}
+.izp-gw .logo-company .mark img:last-child{position:absolute;left:3px;top:3px;width:12px;height:12px}
+.izp-gw .logo-company span:last-child{font-family:Inter,var(--gwfont);font-weight:800;font-size:14px;color:var(--neutral40);line-height:normal}
+
+/* cuerpo */
+.izp-gw .scroll{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:10px var(--gwpad)}
+.izp-gw .btn-applepay{width:100%;height:43px;flex:none;border:0;padding:0;border-radius:4px;
+  background:var(--apple-black);display:grid;place-items:center;cursor:pointer}
+.izp-gw .btn-applepay img{width:56px;height:23px;display:block}
+.izp-gw .txt-nav{display:flex;align-items:center;gap:12px;width:100%;flex:none}
+.izp-gw .txt-nav .lnx{flex:1 1 0;min-width:0;height:1px;
+  background:repeating-linear-gradient(to right,var(--neutral40) 0 2px,transparent 2px 4px)}
+.izp-gw .txt-nav p{margin:0;font-size:14px;font-weight:300;white-space:nowrap}
+
+/* selector de métodos */
+.izp-gw .select{position:relative;width:100%;height:80px;flex:none;overflow:hidden}
+/* el margen lateral ya lo pone .scroll: aquí solo se reparte el ancho libre */
+.izp-gw .methods{position:absolute;left:0;right:0;top:8px;
+  display:flex;align-items:center;justify-content:center;gap:var(--gwgap)}
+.izp-gw .tile{position:relative;flex:1 1 0;min-width:0;max-width:108px;height:64px;padding:0;text-align:left;cursor:default;
+  background:#fff;border:1px solid transparent;border-radius:4px;filter:drop-shadow(0 0 2.5px rgba(0,0,0,.25));
+  font-family:var(--gwfont);color:var(--neutro);transition:border-color .2s,transform .2s}
+.izp-gw .tile .label{position:absolute;left:12px;bottom:12px;font-size:14px;font-weight:300;line-height:normal;white-space:nowrap}
+.izp-gw .tile .check{position:absolute;right:12px;top:12px;width:16px;height:16px;display:none}
+.izp-gw .tile[aria-selected="true"]{border-color:var(--aqua)}
+.izp-gw .tile[aria-selected="true"] .label{font-weight:700}
+.izp-gw .tile[aria-selected="true"] .check{display:block}
+.izp-gw .tile .ico-tarjeta{position:absolute;left:11px;top:11px;width:18.182px;height:13px}
+.izp-gw .tile .ico-qr{position:absolute;left:12px;top:12px;width:12px;height:12px}
+.izp-gw .ico-yape{position:absolute;left:12px;top:12px;width:21px;height:13px;overflow:hidden;border-radius:1.5px}
+.izp-gw .ico-yape img{position:absolute;display:block}
+.izp-gw .ico-yape .bg{left:0;top:0;width:21px;height:13px}
+.izp-gw .ico-yape .w{left:.368px;top:2px;width:18.5698px;height:14.7451px}
+.izp-gw .ico-yape .g{left:3.583px;top:-7.995px;width:10.6848px;height:11.6846px}
+.izp-gw .tile-more{position:relative;width:48px;height:64px;flex:none;padding:0;background:#fff;border:1px solid transparent;border-radius:4px;
+  filter:drop-shadow(0 0 2.5px rgba(0,0,0,.25));cursor:default;transition:border-color .2s}
+.izp-gw .tile-more[aria-selected="true"]{border-color:var(--aqua)}
+.izp-gw .tile-more .plin{position:absolute;left:12px;top:16px;width:10.39px;height:9.7px;object-fit:contain}
+.izp-gw .tile-more .ibk{position:absolute;left:18.55px;top:8px;width:25.45px;height:25.45px}
+.izp-gw .tile-more .sep{position:absolute;left:24.47px;top:16px;width:.5px;height:9.7px;background:#469e9c;border-radius:1px}
+.izp-gw .tile-more .chev{position:absolute;left:20px;top:43px;width:8px;height:8px;transform:rotate(90deg);background:no-repeat center/5px 8px}
+
+.izp-gw .shield{width:100%;flex:none;height:40px;display:flex;align-items:center;justify-content:center;padding:11.5px 16.5px}
+.izp-gw .shield p{margin:0;font-size:12px;font-weight:300;text-align:center}
+
+/* formulario: crece para ocupar el alto libre y centra los métodos de cuerpo corto */
+.izp-gw .form{width:100%;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.izp-gw .rowf{display:flex;gap:16px;width:100%}
+.izp-gw .rowf > *{flex:1 1 0;min-width:0}
+.izp-gw .field{position:relative;display:flex;align-items:center;gap:8px;width:100%;height:41px;
+  padding:11px 16px;background:#fff;border:1px solid var(--neutral40);border-radius:4px;overflow:hidden}
+.izp-gw .field.on{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,160,157,.12)}
+.izp-gw .field input{flex:1 1 0;min-width:0;border:0;outline:0;background:none;padding:0;
+  font-family:var(--gwfont);font-weight:300;font-size:14px;line-height:normal;color:var(--neutro)}
+.izp-gw .field input::placeholder{color:var(--neutral40);opacity:1}
+.izp-gw .field .brand{width:16px;height:16px;flex:none}
+.izp-gw .cvv .dots{width:26px;height:6px;flex:none}
+.izp-gw .cvv .icons{display:flex;align-items:center;gap:8px;flex:none}
+.izp-gw .cvv .icons > img{width:16px;height:16px;display:block}
+.izp-gw .icon-card{position:relative;width:16px;height:16px;overflow:hidden;flex:none;display:block}
+.izp-gw .icon-card .body{position:absolute;left:0;top:3px;width:14px;height:11px;background:#c4c4c4;border-radius:2px}
+.izp-gw .icon-card .band{position:absolute;left:0;top:4px;width:14px;height:3px}
+.izp-gw .icon-card .stripe{position:absolute;left:1px;top:8px;width:12px;height:2px;background:#fff;border-radius:2px}
+.izp-gw .icon-card .circle{position:absolute;left:8px;top:1px;width:8px;height:8px}
+.izp-gw .icon-card .num{position:absolute;left:8px;top:2px;width:8px;height:7px;display:grid;place-items:center;
+  font-size:4.5px;font-weight:500;letter-spacing:-.45px;color:#fff;line-height:normal}
+.izp-gw .checkbox-row{display:flex;align-items:center;gap:8px;width:100%;flex:none}
+.izp-gw .checkbox-row input{appearance:none;-webkit-appearance:none;margin:0;width:16px;height:16px;flex:none;cursor:pointer;
+  background:#fff;border:1px solid var(--neutral40);border-radius:4px}
+.izp-gw .checkbox-row input:checked{background:var(--aqua);border-color:var(--aqua)}
+.izp-gw .checkbox-row input:checked:after{content:"";display:block;width:100%;height:100%;background-color:#fff;
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'><path d='M1 5.2 4.4 8.6 11 1.6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/10px 8px no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'><path d='M1 5.2 4.4 8.6 11 1.6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/10px 8px no-repeat}
+.izp-gw .checkbox-row label{flex:1 1 0;min-width:0;font-size:13px;font-weight:300;color:var(--neutro);cursor:pointer}
+
+/* campo de tarjeta vacío (tarjeta_01): logos de redes en gris hasta que se reconoce la marca */
+.izp-gw .field .nets{display:flex;gap:4px;flex:none}
+.izp-gw .field .nets img{width:16px;height:16px;display:block}
+.izp-gw .field .nets .mc,.izp-gw .field .nets .amex{position:relative;width:16px;height:16px;border-radius:2px;overflow:hidden;background:#000}
+.izp-gw .field .nets .amex{background:#787878}
+.izp-gw .field .nets .mc img{position:absolute;left:6.25%;top:25%;width:83.33%;height:50%}
+.izp-gw .field .nets .amex img{position:absolute;left:6.25%;top:37.5%;width:84.58%;height:20%}
+.izp-gw .field .brand,.izp-gw .field.has-brand .nets{display:none}
+.izp-gw .field.has-brand .brand{display:block}
+.izp-gw .cvv .dots,.izp-gw .cvv .icons > img{display:none}
+.izp-gw .cvv .ph{flex:1 1 0;font-size:14px;font-weight:300;color:var(--neutral40)}
+.izp-gw .cvv.filled .dots,.izp-gw .cvv.filled .icons > img{display:block}
+.izp-gw .cvv.filled .ph{display:none}
+.izp-gw .cvv.filled .dots + .icons{margin-left:auto}
+
+/* pie: botón de pago, gris hasta que el formulario está completo */
+.izp-gw .nav-bottom{flex:none;height:93px;display:flex;flex-direction:column;background:#fff;
+  padding:12px var(--gwpad) 6px;box-shadow:0 -1px 2px rgba(0,0,0,.05)}
+.izp-gw .btn-pagar{position:relative;width:100%;height:42px;flex:none;border:0;border-radius:4px;overflow:hidden;
+  background:#e9e9e9;color:#989b9f;font-family:var(--gwfont);font-size:18px;font-weight:700;cursor:default;
+  transition:background .3s,color .3s,transform .12s}
+.izp-gw .btn-pagar[data-state="on"],.izp-gw .btn-pagar[data-state="press"]{background:var(--aqua);color:#fff}
+.izp-gw .btn-pagar[data-state="press"]{transform:scale(.985);filter:brightness(.92)}
+
+/* pantallas de procesando (tarjeta_06) y pago exitoso (tarjeta_07): tapan toda la pasarela */
+.izp-gw .stage{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;background:#fff;
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.izp-gw[data-step="proc"] .st-proc,.izp-gw[data-step="ok"] .st-ok{opacity:1;visibility:visible;transition:opacity .3s}
+.izp-gw .st-proc .body{flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:0 32px}
+.izp-gw .st-proc .loader{width:128px;height:128px;display:block;animation:izp-rot 1s linear infinite}
+@keyframes izp-rot{to{transform:rotate(360deg)}}
+.izp-gw .stage .txt{display:flex;flex-direction:column;gap:12px;width:100%;text-align:center}
+.izp-gw .stage h3{margin:0;font-size:24px;font-weight:700;line-height:normal;color:var(--aqua)}
+.izp-gw .stage .txt p{margin:0;font-size:16px;font-weight:300;line-height:normal}
+.izp-gw .st-proc .logo-izipay{align-self:center;margin-bottom:17px}
+.izp-gw .st-ok .body{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:24px;padding:40px 32px 0}
+.izp-gw .st-ok .hero-ok{display:flex;flex-direction:column;align-items:center;gap:16px}
+.izp-gw .st-ok .hero-ok img{width:80px;height:80px;display:block}
+.izp-gw .st-ok .hr{width:100%;height:1px;background:#d9d9d9}
+.izp-gw .st-ok dl{margin:0;width:100%;display:flex;flex-direction:column;gap:12px;font-size:14px}
+.izp-gw .st-ok dl div{display:flex;justify-content:space-between;align-items:center;white-space:nowrap}
+.izp-gw .st-ok dt{font-weight:700;color:#424242}
+.izp-gw .st-ok dd{margin:0;font-weight:300}
+.izp-gw .st-ok .foot{flex:none;height:106px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  box-shadow:0 -1px 2px rgba(0,0,0,.05)}
+.izp-gw .st-ok .redir{display:flex;flex-direction:column;align-items:center;gap:8px}
+.izp-gw .st-ok .redir p{margin:0;display:flex;align-items:center;gap:4px;font-size:12px;font-weight:300;white-space:nowrap}
+.izp-gw .st-ok .redir p b{font-weight:700}
+.izp-gw .st-ok .redir p img{width:16px;height:16px;display:block}
+.izp-gw .st-ok .redir a{font-size:16px;font-weight:700;color:var(--neutro);text-decoration:underline}
+.izp-gw .nav-bottom .spacer{flex:1 1 0;min-height:0}
+.izp-gw .footer-bottom{display:flex;flex-direction:column;align-items:center;width:100%;flex:none}
+.izp-gw .logo-izipay{position:relative;width:90px;height:11px}
+.izp-gw .logo-izipay .pwr{position:absolute;left:-1px;top:-1px;height:11px;display:flex;align-items:center;
+  font-family:"Open Sans",var(--gwfont);font-weight:600;font-size:7.8px;letter-spacing:.156px;color:var(--neutral30);white-space:nowrap}
+.izp-gw .logo-izipay img{position:absolute;left:54px;top:0;width:36px;height:12px;display:block}
+
+/* ---------------------------------------------------------------- texto */
+.izp-copy{position:relative;z-index:20;height:100%;max-width:1440px;margin:0 auto;
+  padding:clamp(48px,6vw,96px) clamp(20px,5vw,80px) clamp(36px,4vw,64px);
+  display:flex;flex-direction:column;pointer-events:none}
+.izp-copy>*{pointer-events:auto}
+.izp-copy-main{margin-top:auto;margin-bottom:auto;max-width:min(560px,42vw)}
+.izp-h1{margin:0;font-weight:700;font-size:clamp(46px,5.4vw,88px);line-height:1.02;letter-spacing:-.025em;color:#141c1e}
+.izp-h1 span{display:block;color:var(--teal)}
+.izp-lead{margin:clamp(20px,2.4vw,34px) 0 0;font-size:clamp(17px,1.5vw,24px);line-height:1.45;color:#475458;max-width:26ch}
+.izp-ctas{display:flex;flex-wrap:wrap;gap:16px;margin-top:clamp(26px,3vw,44px)}
+.izp-btn{display:inline-flex;align-items:center;justify-content:center;height:clamp(50px,4vw,60px);padding:0 clamp(26px,2.6vw,40px);
+  border-radius:999px;font:500 clamp(15px,1.2vw,18px)/1 Roboto,Arial,sans-serif;text-decoration:none;
+  transition:background .2s,box-shadow .2s,transform .2s}
+.izp-btn:focus-visible{outline:3px solid var(--teal-2);outline-offset:3px}
+.izp-btn-p{background:var(--teal);color:#fff;box-shadow:0 12px 24px -14px rgba(14,133,132,.8)}
+.izp-btn-p:hover{background:var(--teal-d);transform:translateY(-1px)}
+.izp-btn-s{background:#fff;color:var(--teal);box-shadow:0 0 0 1.5px #bfe0de}
+.izp-btn-s:hover{box-shadow:0 0 0 1.5px var(--teal-2)}
+.izp-stats{display:flex;margin:0;padding:0}
+.izp-stats div{padding:0 clamp(18px,2.2vw,32px);border-left:1px solid #c5d8d8}
+.izp-stats div:first-child{padding-left:0;border-left:0}
+.izp-stats dt{font-size:clamp(24px,2vw,32px);line-height:1.1;font-weight:700;color:#141c1e}
+.izp-stats dd{margin:6px 0 0;font-size:clamp(13px,1vw,15px);color:var(--mut)}
+
+/* foco visible dentro de la escena */
+.izp-scene button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+/* ---------------------------------------------------------------- responsive */
+.izp-section.izp-narrow{height:auto;display:flex;flex-direction:column}
+.izp-narrow .izp-scene{order:2;max-width:1000px;margin:0 auto;position:relative;inset:auto;width:100%;aspect-ratio:840/620}
+.izp-narrow .izp-copy{height:auto;padding-bottom:28px}
+.izp-narrow .izp-copy-main{max-width:none;margin:0}
+.izp-narrow .izp-stats{margin-top:36px}
+.izp-narrow .izp-fade{background:linear-gradient(180deg,var(--bg) 0%,rgba(238,247,247,0) 8%)}
+/* en angosto la escena empieza más arriba: bajamos las tarjetas para que no las coma el degradado */
+@media (max-width:520px){
+  .izp-ctas{flex-direction:column}
+  .izp-btn{width:100%}
+  .izp-stats div{padding:0 14px}
+}
+
+/* =====================================================================
+   MOVIL (<640px) · prefijo izm-
+   La escena de escritorio no sobrevive al recorte. Debajo de 640px se
+   sustituye por un telefono de frente y la pasarela real se MUEVE dentro
+   de su pantalla: es el mismo nodo, no una copia, asi que estado y
+   animaciones son unicos. Se maqueta a ~290px, sin escalar, para que el
+   texto se rasterice a su tamano final.
+   ===================================================================== */
+.izm-scene{display:none}
+.izp-section.izp-mobile{height:auto}
+.izp-mobile .izp-scene{display:none}
+.izp-mobile .izm-scene{display:block}
+
+/* el orden lo marca la seccion: texto · escena · cifras */
+.izp-mobile .izp-copy{display:contents}
+.izp-mobile .izp-copy-main{order:1;max-width:none;margin:0;padding:18px 20px 0}
+.izp-mobile .izm-scene{order:2}
+.izp-mobile .izp-stats{order:3;margin:16px 0 0;padding:0 20px 26px}
+.izp-mobile .izp-h1{font-size:clamp(36px,10.5vw,46px)}
+.izp-mobile .izp-lead{font-size:15.5px;margin-top:12px;max-width:26ch}
+.izp-mobile .izp-ctas{flex-direction:row;flex-wrap:nowrap;gap:10px;margin-top:18px}
+.izp-mobile .izp-btn{flex:1 1 0;width:auto;height:46px;padding:0 14px;font-size:14.5px}
+.izp-mobile .izp-stats div{padding:0 13px}
+.izp-mobile .izp-stats dt{font-size:22px}
+.izp-mobile .izp-stats dd{margin-top:3px;font-size:12px}
+
+.izm-scene{position:relative;width:100%;overflow:hidden;-webkit-user-select:none;user-select:none}
+.izm-stage{position:absolute;left:0;top:0;width:390px;height:790px;transform-origin:0 0;perspective:1600px;perspective-origin:50% 40%}
+.izm-wall{position:absolute;inset:0 -90px;background:
+  radial-gradient(70% 45% at 70% 16%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%),
+  linear-gradient(180deg,rgba(220,239,239,0) 0%,#cde6e6 30%,#bddcdc 70%)}
+.izm-window{position:absolute;right:-96px;top:-14px;width:220px;height:300px;opacity:.5;filter:blur(14px);transform:skewX(-10deg);
+  background:linear-gradient(90deg,transparent 0 46%,rgba(120,170,172,.45) 46% 50%,transparent 50%),linear-gradient(160deg,#fff,rgba(255,255,255,.3))}
+.izm-desk{position:absolute;left:-90px;right:-90px;top:676px;bottom:0;
+  background:linear-gradient(180deg,#7f9397 0%,#687c80 45%,#55686c 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.35)}
+.izm-desk:after{content:"";position:absolute;inset:0;background:radial-gradient(52% 60% at 50% 0%,rgba(40,200,190,.22),transparent 70%)}
+.izm-plant{position:absolute;left:-92px;top:188px;width:152px;height:274px;filter:blur(.8px)}
+.izm-plant svg{width:100%;height:100%}
+
+/* ------------------------------------------------ iPhone 16 (render del PSD)
+   Igual que la MacBook: el aparato es una foto, el contenido vive encima en
+   el rect exacto de la pantalla y la mascara del propio PSD le da las
+   esquinas. Nada de rotarlo: el marco esta pintado de frente.
+   344×710 deja una pantalla de 318×689; sin la barra de estado quedan
+   645px para la pasarela, a su tamano real. */
+.izm-phone{position:absolute;left:23px;top:20px;width:344px;height:710px}
+.izm-phone .sh{position:absolute;left:18px;bottom:-22px;width:308px;height:46px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(5,15,18,.5),transparent);filter:blur(8px)}
+.izm-phone .dev{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;-webkit-user-drag:none}
+.izm-screen{position:absolute;left:3.728%;top:1.482%;width:92.447%;height:97.036%;
+  overflow:hidden;background:#fff;display:flex;flex-direction:column;
+  -webkit-mask:url(assets/hero/iphone-mask.png) center/100% 100% no-repeat;
+          mask:url(assets/hero/iphone-mask.png) center/100% 100% no-repeat}
+/* el brillo del cristal, flojo: por debajo tiene que leerse el formulario */
+.izm-screen:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,.04) 30%,transparent 31%)}
+/* la isla la tapa el contenido, asi que se vuelve a pintar: medidas tomadas
+   sobre el render, en porcentaje de la pantalla */
+.izm-island{position:absolute;left:34.747%;top:1.671%;width:30.714%;height:4.153%;
+  border-radius:999px;background:#050607;z-index:6}
+.izm-status{position:relative;z-index:2;flex:none;height:44px;display:flex;align-items:center;justify-content:space-between;
+  padding:6px 22px 0;background:#fff;font:600 12.5px/1 Roboto,Arial,sans-serif;color:#15252a}
+.izm-status i{display:inline-flex;gap:4px;align-items:center}
+.izm-status i b{display:inline-block;width:2.5px;background:#15252a;border-radius:1px}
+.izm-status i u{display:inline-block;width:19px;height:10px;border-radius:3px;border:1.4px solid #15252a;position:relative}
+.izm-status i u:after{content:"";position:absolute;inset:1.4px;right:3px;background:#15252a;border-radius:1px}
+/* hueco donde el script deposita .izp-gw-wrap al cruzar el breakpoint */
+.izm-slot{position:relative;flex:1 1 auto;min-height:0}
+.izm-home{position:absolute;left:50%;bottom:6px;z-index:5;width:104px;height:4px;margin-left:-52px;border-radius:3px;background:#15252a;opacity:.5}
+
+/* la pasarela dentro del telefono: sin tarjeta, sin sombra y con los
+   margenes al minimo, porque ahora el marco es el propio aparato */
+.izp-mobile .izp-gw-wrap{position:absolute;inset:0;width:auto;height:auto;zoom:1}
+.izp-mobile .izp-gw{--gwpad:13px;--gwgap:8px;border-radius:0;box-shadow:none}
+.izp-mobile .izp-gw:after{display:none}
+.izp-mobile .izp-gw .tile .label{left:10px;bottom:10px;font-size:13px}
+.izp-mobile .izp-gw .tile .check{right:8px;top:8px;width:14px;height:14px}
+.izp-mobile .izp-gw .tile-more{width:44px}
+.izp-mobile .izp-gw .stage h3{font-size:21px}
+.izp-mobile .izp-gw .st-proc .body,.izp-mobile .izp-gw .st-ok .body{padding-left:20px;padding-right:20px}
+.izp-mobile .izp-gw .st-proc .loader{width:104px;height:104px}
+.izp-mobile .izp-gw .st-proc .logo-izipay{margin-bottom:22px}
+.izp-mobile .izp-gw .st-ok .foot{height:auto;padding:16px 0 24px}
+.izp-mobile .izp-gw .st-ok dl div{flex-wrap:wrap;gap:4px 8px}
+.izp-mobile .izp-gw .st-ok dd{margin-left:auto}
+/* el aparato ya hace de marco: los aires del componente se recortan para
+   que el formulario entre sin barra de desplazamiento */
+.izp-mobile .izp-gw .scroll{gap:6px;padding:8px var(--gwpad)}
+.izp-mobile .izp-gw .shield{height:32px;padding:8px 12px}
+.izp-mobile .izp-gw .form{gap:13px}
+.izp-mobile .izp-gw .nav-bottom{height:90px;padding:10px var(--gwpad) 18px}
+
+@media (prefers-reduced-motion:reduce){
+  .izp-section *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= HERO: copiar desde aquí ======================= -->
+<section class="izp-section" id="izpHero" aria-labelledby="izpTitle">
+  <svg class="izp-sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="izpL1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1f5c43"/><stop offset="1" stop-color="#5bb07e"/></linearGradient>
+    <linearGradient id="izpL2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#27704f"/><stop offset="1" stop-color="#7cc996"/></linearGradient>
+    <linearGradient id="izpL3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#184d38"/><stop offset="1" stop-color="#419a68"/></linearGradient>
+    <linearGradient id="izpPot" x1="0" x2="1"><stop offset="0" stop-color="#8d989c"/><stop offset=".35" stop-color="#d7dfe1"/><stop offset=".6" stop-color="#b9c4c7"/><stop offset="1" stop-color="#7c878b"/></linearGradient>
+    <g class="leaves" id="izpLeaves"><path d="M100 262 Q38.0 205.6 -27.2 182.5 Q22.1 231.0 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q37.5 222.3 -27.2 182.5" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q42.0 173.6 -27.1 120.8 Q18.2 195.0 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q37.9 191.4 -27.1 120.8" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q56.9 144.8 -5.6 63.3 Q26.9 160.7 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q49.0 162.7 -5.6 63.3" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q82.3 124.7 39.5 19.4 Q51.2 132.5 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q71.7 140.7 39.5 19.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q109.2 112.8 85.9 -7.6 Q75.3 114.6 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q94.9 127.2 85.9 -7.6" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q136.9 131.4 138.3 20.0 Q105.3 126.4 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q121.1 141.0 138.3 20.0" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q163.1 151.1 186.2 48.7 Q131.6 138.3 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q144.9 155.4 186.2 48.7" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q177.6 182.4 217.6 100.2 Q151.7 163.6 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q160.4 181.1 217.6 100.2" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q179.2 215.2 226.4 155.9 Q159.9 192.2 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q164.5 209.0 226.4 155.9" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q79.3 164.2 38.4 92.9 Q53.0 173.8 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q71.1 177.4 38.4 92.9" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q141.3 162.0 150.5 73.6 Q114.2 154.8 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q127.2 167.8 150.5 73.6" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q165.0 244.8 207.9 209.4 Q153.6 221.4 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q154.8 235.7 207.9 209.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q47.3 230.0 -3.4 224.4 Q39.0 252.6 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q49.0 243.2 -3.4 224.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/></g>
+  </defs>
+  </svg>
+
+  <div class="izp-scene" id="izpScene">
+    <div class="izp-stage" id="izpStage">
+
+      <div class="izp-wall"></div>
+      <div class="izp-window"></div>
+      <div class="izp-shaft"></div>
+
+      <div class="izp-props">
+      <div class="izp-plant-sh"></div>
+      <div class="izp-plant" data-depth="3" aria-hidden="true">
+        <svg viewBox="0 0 200 360" width="200" height="360">
+          <use href="#izpLeaves"/>
+          <path d="M44 262 L156 262 L146 346 Q100 356 54 346 Z" fill="url(#izpPot)"/>
+          <ellipse cx="100" cy="262" rx="56" ry="10" fill="#aab5b8"/>
+          <ellipse cx="100" cy="263" rx="50" ry="7.5" fill="#3a2a1f"/>
+        </svg>
+      </div>
+      </div>
+
+      <div class="izp-desk"><span class="izp-tex"></span></div>
+
+      <div class="izp-props">
+      <div class="izp-screenglow"></div>
+
+      <!-- ------------------------------------------------ MacBook Air M2 (render del PSD) -->
+      <div class="izp-mac" data-depth="5" aria-hidden="true">
+        <div class="shd"></div>
+        <img class="refl" src="assets/hero/macbook.webp" alt="">
+        <img class="dev" src="assets/hero/macbook.webp" alt="" width="2810" height="1796">
+        <div class="izp-display">
+          <span class="notch"></span>
+          <div class="izp-os"></div>
+          <div class="izp-menubar"><b>Code</b><span>Archivo</span><span>Ver</span><span>Terminal</span><span class="rt">sandbox</span></div>
+
+          <div class="izp-w izp-w-ide">
+            <div class="bar"><i></i><i></i><i></i><span>checkout.js — mi-tienda</span></div>
+            <div class="in">
+          <div class="izp-screen">
+            <div class="sc-act"><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="sc-side">
+              <h6>Explorador</h6>
+              <b>mi-tienda</b>
+              <span>package.json</span>
+              <span class="on">checkout.js</span>
+              <span>server.js</span>
+              <span>.env</span>
+            </div>
+            <div class="sc-tabs"><span class="on">checkout.js</span><span>server.js</span></div>
+            <div class="sc-code" id="izpCode"></div>
+            <div class="sc-term">
+              <div class="h"><span class="on">Terminal</span><span>Salida</span><span>Problemas</span></div>
+              <div id="izpTerm"></div>
+            </div>
+            <div class="sc-bar"><span>main</span><span>sandbox</span><span>JavaScript</span><span>Izipay SDK 3.2.1</span></div>
+          </div>
+            </div>
+          </div>
+
+          <div class="izp-w izp-w-gw">
+            <div class="bar"><i></i><i></i><i></i><span class="url">https://demoshop.pe/checkout</span></div>
+            <div class="in" id="izpSlot"></div>
+          </div>
+        </div>
+        <img class="glass" src="assets/hero/macbook-glass.webp" alt="">
+      </div>
+
+
+      <div class="izp-mug" data-depth="9" aria-hidden="true">
+        <div class="sh"></div>
+        <span class="izp-steam" style="left:52px;animation-delay:0s"></span>
+        <span class="izp-steam" style="left:80px;animation-delay:1.2s"></span>
+        <span class="izp-steam" style="left:106px;animation-delay:2.4s"></span>
+        <div class="handle"><span></span></div>
+        <div class="body">
+          <span class="logo">&lt;/&gt;</span>
+          <span class="gloss"></span>
+          <span class="bounce"></span>
+          <span class="foot"></span>
+        </div>
+        <div class="rim"><span class="lip"></span><span class="coffee"></span></div>
+      </div>
+
+      <!-- ------------------------------------------------ tarjetas flotantes -->
+      <div class="izp-card izp-toast" id="izpToast" data-depth="14" role="status" aria-live="polite">
+        <div class="izp-ok"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 11.5l4 4 8-9"/></svg></div>
+        <div><div class="izp-t1">Pago exitoso</div><div class="izp-t2">S/ 129.90</div><div class="izp-t3 izp-via">con tarjeta</div></div>
+      </div>
+
+      <div class="izp-card izp-api" data-depth="10">
+        <div class="izp-t1">POST /v1/payments</div>
+        <div class="izp-st"><span class="izp-dot"></span>201 Created<span class="izp-ms izp-msv">182 ms</span></div>
+      </div>
+
+      <div class="izp-card izp-key" data-depth="12">
+        <div class="izp-ok sm"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 11.5l4 4 8-9"/></svg></div>
+        <div><div class="izp-t1"><b>API Key generada</b></div><div class="izp-t3">Lista para usar</div></div>
+      </div>
+      </div>
+
+      <!-- ------------------------------------------------ pasarela de pago real -->
+      <div class="izp-gw-wrap">
+        <div class="izp-gw-tilt">
+          <div class="izp-gw" id="izpGw" data-step="form" role="group" aria-label="Formulario de pago Izipay">
+
+            <header class="head">
+              <p class="lang"><b>ESP</b> / <i>ENG</i></p>
+              <div class="logo-company">
+                <span class="mark">
+                  <img src="assets/pasarela/8fb7b.svg" alt="">
+                  <img src="assets/pasarela/e896e.svg" alt="">
+                </span>
+                <span>DemoShop</span>
+              </div>
+              <p class="order-t">Número de pedido</p>
+              <p class="order-n">123456789012345678</p>
+              <button class="close" type="button" tabindex="-1" aria-label="Cerrar">
+                <img src="assets/pasarela/34703.svg" alt="">
+              </button>
+              <div class="rule"></div>
+            </header>
+
+            <div class="scroll">
+              <button class="btn-applepay" type="button" tabindex="-1" aria-label="Pagar con Apple Pay">
+                <img src="assets/pasarela/49af3.svg" alt="Apple Pay">
+              </button>
+
+              <div class="txt-nav">
+                <span class="lnx"></span>
+                <p>O puedes pagar usando:</p>
+                <span class="lnx"></span>
+              </div>
+
+              <div class="select">
+                <div class="methods" id="izpMethods" role="tablist" aria-label="Métodos de pago">
+                  <button class="tile" type="button" tabindex="-1" role="tab" data-m="card" aria-selected="true">
+                    <img class="ico-tarjeta" src="assets/pasarela/c21d6.svg" alt="">
+                    <span class="label">Tarjeta</span>
+                    <img class="check" src="assets/pasarela/7b119.svg" alt="">
+                  </button>
+
+                  <button class="tile" type="button" tabindex="-1" role="tab" data-m="qr" aria-selected="false">
+                    <img class="ico-qr" src="assets/pasarela/29fe3.svg" alt="">
+                    <span class="label">QR</span>
+                    <img class="check" src="assets/pasarela/7b119.svg" alt="">
+                  </button>
+
+                  <button class="tile" type="button" tabindex="-1" role="tab" data-m="yape" aria-selected="false">
+                    <span class="ico-yape">
+                      <img class="bg" src="assets/pasarela/c445e.svg" alt="">
+                      <img class="w" src="assets/pasarela/5046e.svg" alt="">
+                      <img class="g" src="assets/pasarela/43214.svg" alt="">
+                    </span>
+                    <span class="label">Yape</span>
+                    <img class="check" src="assets/pasarela/7b119.svg" alt="">
+                  </button>
+
+                  <button class="tile-more" type="button" tabindex="-1" role="tab" data-m="plin" aria-selected="false" aria-label="Más métodos de pago">
+                    <img class="plin" src="assets/pasarela/49713.png" alt="">
+                    <span class="sep"></span>
+                    <img class="ibk" src="assets/pasarela/17c96.svg" alt="">
+                    <span class="chev" style="background-image:url('assets/pasarela/070e7.svg')"></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="shield"><p id="izpShield">Recuerda activar tus compras por internet.</p></div>
+
+              <div class="form" id="izpGwBody"></div>
+            </div>
+
+            <div class="nav-bottom">
+              <button class="btn-pagar" type="button" id="izpPay" tabindex="-1" data-state="off">Pagar S/ 129.90</button>
+              <div class="spacer"></div>
+              <div class="footer-bottom">
+                <div class="logo-izipay">
+                  <span class="pwr">POWERED BY</span>
+                  <img src="assets/pasarela/74958.svg" alt="Izipay">
+                </div>
+              </div>
+            </div>
+
+            <div class="stage st-proc" aria-live="polite">
+              <div class="body">
+                <img class="loader" src="assets/hero/gw-loading.svg" alt="">
+                <div class="txt">
+                  <h3>Estamos procesando tu compra</h3>
+                  <p>Por favor, no cierres la ventana.</p>
+                </div>
+              </div>
+              <div class="logo-izipay">
+                <span class="pwr">POWERED BY</span>
+                <img src="assets/pasarela/74958.svg" alt="Izipay">
+              </div>
+            </div>
+
+            <div class="stage st-ok" aria-live="polite">
+              <div class="body">
+                <div class="hero-ok">
+                  <img src="assets/hero/gw-success.svg" alt="">
+                  <h3>Pago realizado con éxito</h3>
+                </div>
+                <div class="hr"></div>
+                <dl>
+                  <div><dt>Número de transacción:</dt><dd>1123456789012345678</dd></div>
+                  <div><dt>Monto pagado:</dt><dd>S/129.90</dd></div>
+                </dl>
+              </div>
+              <div class="foot">
+                <div class="redir">
+                  <p>Redireccionando al sitio del comercio en <b id="izpSecs">4 segundos</b><img src="assets/hero/gw-clock.svg" alt=""></p>
+                  <a href="#empezar" tabindex="-1">Redireccionar ahora</a>
+                </div>
+                <div class="logo-izipay">
+                  <span class="pwr">POWERED BY</span>
+                  <img src="assets/pasarela/74958.svg" alt="Izipay">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="izp-grade"></div>
+    <div class="izp-grain"></div>
+    <div class="izp-fade"></div>
+    <div class="izp-vignette"></div>
+  </div>
+
+  <!-- ------------------------------------------------ escena movil (<640px) -->
+  <div class="izm-scene" id="izmScene">
+    <div class="izm-stage" id="izmStage">
+      <div class="izm-wall"></div>
+      <div class="izm-window"></div>
+      <div class="izm-plant" aria-hidden="true">
+        <svg viewBox="0 0 200 360">
+          <use href="#izpLeaves"/>
+          <path d="M44 262 L156 262 L146 346 Q100 356 54 346 Z" fill="url(#izpPot)"/>
+          <ellipse cx="100" cy="262" rx="56" ry="10" fill="#aab5b8"/>
+          <ellipse cx="100" cy="263" rx="50" ry="7.5" fill="#3a2a1f"/>
+        </svg>
+      </div>
+      <div class="izm-desk"></div>
+
+      <div class="izm-phone" id="izmPhone">
+        <div class="sh"></div>
+        <img class="dev" src="assets/hero/iphone.webp" alt="" width="1046" height="2159">
+        <div class="izm-screen">
+          <div class="izm-status" aria-hidden="true"><span>9:41</span>
+            <i><b style="height:5px"></b><b style="height:7px"></b><b style="height:9px"></b><b style="height:11px"></b><u></u></i>
+          </div>
+          <div class="izm-slot" id="izmSlot"></div>
+          <div class="izm-island" aria-hidden="true"></div>
+          <div class="izm-home" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="izp-copy">
+    <div class="izp-copy-main">
+      <h1 class="izp-h1" id="izpTitle">Hola, <span>developer</span></h1>
+      <p class="izp-lead">Integra Izipay SDK en minutos con nuestras guías</p>
+      <div class="izp-ctas">
+        <a class="izp-btn izp-btn-p" href="#empezar">Comenzar</a>
+        <a class="izp-btn izp-btn-s" href="#documentacion">Ver documentación</a>
+      </div>
+    </div>
+    <dl class="izp-stats">
+      <div><dt>5 min</dt><dd>Tiempo de setup</dd></div>
+      <div><dt>15+</dt><dd>Métodos de pago</dd></div>
+      <div><dt>24/7</dt><dd>Soporte</dd></div>
+    </dl>
+  </div>
+</section>
+
+<script>
+(function(){
+  var hero=document.getElementById('izpHero'); if(!hero) return;
+  var scene=document.getElementById('izpScene'), stage=document.getElementById('izpStage');
+  var mScene=document.getElementById('izmScene'), mStage=document.getElementById('izmStage');
+  var mSlot=document.getElementById('izmSlot'), dSlot=document.getElementById('izpSlot');
+  var gwWrap=hero.querySelector('.izp-gw-wrap');
+  var SW=1200, SH=760, BP=1280, MP=640;
+  /* recorte en pantallas angostas: debe cubrir del toast al canto del equipo */
+  var NX=306, NY=140, NW=840;
+  var MW=390, MH=790;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* La pasarela es un único nodo que viaja entre las dos escenas: del
+     navegador de la laptop al teléfono. Duplicarla obligaría a sincronizar
+     dos estados y a repetir el formulario entero. */
+  function place(host){
+    if(gwWrap.parentNode!==host) host.appendChild(gwWrap);
+  }
+
+  /* ---- la escena llena el hero en escritorio, se recorta en tablet y se
+         cambia por la del teléfono en móvil ---- */
+  /* alto visible con las barras del navegador desplegadas (svh): con innerHeight
+     el teléfono cambiaría de tamaño cada vez que Safari esconde la barra */
+  var vhProbe=document.createElement('div');
+  vhProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(vhProbe);
+  function viewH(){ return vhProbe.offsetHeight||window.innerHeight }
+
+  function fit(){
+    var W=hero.clientWidth;
+    hero.classList.toggle('izp-narrow',W<BP);
+    hero.classList.toggle('izp-mobile',W<MP);
+    place(W<MP?mSlot:dSlot);
+    if(W<MP){
+      /* tope en 1: agrandar la escena volveria a difuminar el texto de la
+         pasarela, que es justo lo que se gana maquetandola a su tamano */
+      var m=Math.max(.55,Math.min(1,mScene.clientWidth/MW,viewH()/MH));
+      mStage.style.transform='translateX('+((mScene.clientWidth-MW*m)/2).toFixed(1)+'px) scale('+m+')';
+      mScene.style.height=(MH*m).toFixed(1)+'px';
+    }else if(W>=BP){
+      var s=scene.clientHeight/SH;
+      stage.style.transform='translate('+(W-SW*s)+'px,0) scale('+s+')';
+    }else{
+      var s2=scene.clientWidth/NW;
+      stage.style.transform='translate('+(-NX*s2)+'px,'+(-NY*s2)+'px) scale('+s2+')';
+    }
+  }
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(hero);
+  window.addEventListener('resize',fit);
+  fit();
+
+  /* ---- teclado del dibujo anterior: el render del PSD ya lo trae ---- */
+  (function keyboard(){
+    var box=document.getElementById('izpKeys'); if(!box) return;
+    var X=32, Y=20, W=396, GAP=2.4;
+    var rows=[
+      {h:12, u:[1,1,1,1,1,1,1,1,1,1,1,1,1,1]},
+      {h:19, u:[1,1,1,1,1,1,1,1,1,1,1,1,1,1.7]},
+      {h:19, u:[1.55,1,1,1,1,1,1,1,1,1,1,1,1,1.15]},
+      {h:19, u:[1.8,1,1,1,1,1,1,1,1,1,1,1,1.9]},
+      {h:19, u:[2.3,1,1,1,1,1,1,1,1,1,1,2.4]},
+      {h:19, u:[1,1,1,1.25,5.6,1.25,1,1,1]}
+    ];
+    var y=Y, html='';
+    rows.forEach(function(r){
+      var total=r.u.reduce(function(a,b){return a+b},0);
+      var unit=(W-GAP*(r.u.length-1))/total, x=X;
+      r.u.forEach(function(u){
+        var w=unit*u;
+        html+='<i style="left:'+x.toFixed(1)+'px;top:'+y.toFixed(1)+'px;width:'+w.toFixed(1)+'px;height:'+r.h+'px"></i>';
+        x+=w+GAP;
+      });
+      y+=r.h+GAP;
+    });
+    box.innerHTML=html;
+  })();
+
+  /* ---------------------------------------------------------------
+     Flujo oficial de pago con tarjeta (Figma "Pasarela de pago desktop":
+     tarjeta_01 vacío → 02/03 llenando → 06 procesando → 07 pago exitoso).
+     El snippet es ilustrativo: reemplazar por el del SDK oficial.
+     --------------------------------------------------------------- */
+  var CARD={
+    via:'con tarjeta', m:"'card'",
+    extra:[['v','  token'],['p',': '],['v','cardForm'],['p','.'],['f','token'],['p','()']],
+    term:'Token de tarjeta generado'
+  };
+  var FORM=''+
+    '<div class="field"><input type="text" tabindex="-1" inputmode="numeric" aria-label="Número de tarjeta" placeholder="Número de tarjeta" data-v="4111 1111 1111 1111">'+
+      '<span class="nets"><img src="assets/pasarela/33a4e.svg" alt="Visa"><span class="mc"><img src="assets/pasarela/ebe97.svg" alt="Mastercard"></span>'+
+      '<img src="assets/pasarela/05a13.svg" alt="Diners"><span class="amex"><img src="assets/pasarela/a0e29.svg" alt="Amex"></span></span>'+
+      '<img class="brand" src="assets/pasarela/fff59.svg" alt="Visa"></div>'+
+    '<div class="rowf">'+
+      '<div class="field"><input type="text" tabindex="-1" inputmode="numeric" aria-label="Fecha de caducidad" placeholder="Caducidad" data-v="06/23"></div>'+
+      '<div class="field cvv"><span class="ph">CVV</span><img class="dots" src="assets/pasarela/994fe.svg" alt="">'+
+        '<span class="icons"><img src="assets/pasarela/e5a1b.svg" alt="Mostrar CVV">'+
+        '<span class="icon-card" aria-hidden="true"><span class="body"></span><img class="band" src="assets/pasarela/ea77e.svg" alt="">'+
+        '<span class="stripe"></span><img class="circle" src="assets/pasarela/07a94.svg" alt=""><span class="num">135</span></span></span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="rowf">'+
+      '<div class="field"><input type="text" tabindex="-1" aria-label="Nombres" placeholder="Nombres" data-v="Lucho"></div>'+
+      '<div class="field"><input type="text" tabindex="-1" aria-label="Apellidos" placeholder="Apellidos" data-v="Torres"></div>'+
+    '</div>'+
+    '<div class="field"><input type="email" tabindex="-1" aria-label="Correo electrónico" placeholder="Correo" data-v="luchotorres@izipay.pe"></div>'+
+    '<div class="checkbox-row"><input type="checkbox" tabindex="-1" id="izpSave"><label for="izpSave">Guardar esta tarjeta para futuras compras.</label></div>';
+
+  var head=[
+    [['k','import'],['p',' '],['t','Izipay'],['p',' '],['k','from'],['p',' '],['s',"'@izipay/sdk'"],['p',';']],
+    [],
+    [['k','const'],['p',' '],['v','izipay'],['p',' = '],['k','new'],['p',' '],['t','Izipay'],['p','({']],
+    [['v','  apiKey'],['p',': '],['s',"'pk_test_••••••••'"],['p',',']],
+    [['v','  environment'],['p',': '],['s',"'sandbox'"]],
+    [['p','});']],
+    [],
+    [['k','const'],['p',' '],['v','res'],['p',' = '],['k','await'],['p',' '],['v','izipay'],['p','.'],['f','createPayment'],['p','({']],
+    [['v','  amount'],['p',': '],['m','12990'],['p',',']],
+    [['v','  currency'],['p',': '],['s',"'PEN'"],['p',',']]
+  ];
+  var tail=[
+    [['p','});']]
+  ];
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function toks(l){return l.map(function(x){return '<span class="'+x[0]+'">'+esc(x[1])+'</span>'}).join('')}
+  function len(l){return l.reduce(function(a,x){return a+x[1].length},0)}
+  function row(n,inner,hl){return '<div class="ln'+(hl?' hl':'')+'"><span class="n">'+n+'</span>'+inner+'</div>'}
+
+  var codeEl=document.getElementById('izpCode'), termEl=document.getElementById('izpTerm');
+  var gw=document.getElementById('izpGw'), gwBody=document.getElementById('izpGwBody');
+  var payEl=document.getElementById('izpPay'), toast=document.getElementById('izpToast');
+  var secsEl=document.getElementById('izpSecs');
+  /* escritorio y móvil comparten la misma pasarela: un solo run() alimenta las dos escenas */
+  var vias=[].slice.call(hero.querySelectorAll('.izp-via'));
+  var mss=[].slice.call(hero.querySelectorAll('.izp-msv'));
+  function renderCode(animate){
+    var d=CARD, n=1, h='';
+    head.forEach(function(l){h+=row(n++,toks(l))});
+    [[['v','  method'],['p',': '],['s',d.m],['p',',']], d.extra].forEach(function(l,i){
+      var c=len(l);
+      var inner=animate?'<span class="ty" style="--c:'+c+';--d:'+(c*0.028).toFixed(2)+'s;--dl:'+(i*0.4).toFixed(2)+'s">'+toks(l)+'</span>':toks(l);
+      h+=row(n++,inner+(i===1?'<span class="cur"></span>':''),true);
+    });
+    tail.forEach(function(l){h+=row(n++,toks(l))});
+    codeEl.innerHTML=h;
+  }
+
+  function renderTerm(ms){
+    var lines=[
+      '<span class="d">$</span> node checkout.js',
+      '<span class="g">✓</span> '+CARD.term,
+      '<span class="g">✓</span> POST /v1/payments   <span class="y">201</span> <span class="d">· '+ms+' ms</span>',
+      '  status  <span class="g">AUTHORIZED</span>  <span class="d">tx_9F3A72B1</span>'
+    ];
+    termEl.innerHTML=lines.map(function(t,i){
+      return '<div class="row" style="animation-delay:'+(reduce?0:i*.28+.2)+'s">'+t+'</div>';
+    }).join('');
+  }
+
+  var seq=[], running=false;
+  function later(fn,ms){ seq.push(setTimeout(fn,ms)) }
+  function stop(){ seq.forEach(clearTimeout); seq=[]; running=false }
+
+  /* escribe el valor de data-v letra por letra; devuelve cuándo termina */
+  function type(field,t0,step){
+    var inp=field.querySelector('input'), v=inp.dataset.v;
+    later(function(){field.classList.add('on')},t0);
+    for(var i=1;i<=v.length;i++)(function(i){
+      later(function(){ inp.value=v.slice(0,i); if(i===1) field.classList.add('has-brand') },t0+i*step);
+    })(i);
+    later(function(){field.classList.remove('on')},t0+v.length*step+160);
+    return t0+v.length*step+260;
+  }
+
+  function success(ms){
+    gw.dataset.step='ok';
+    vias.forEach(function(n){n.textContent=CARD.via});
+    mss.forEach(function(n){n.textContent=ms+' ms'});
+    toast.classList.remove('pop'); void toast.offsetWidth; toast.classList.add('pop');
+  }
+
+  /* tarjeta_01 → 02/03 → 06 → 07, y vuelta a empezar */
+  function run(){
+    stop(); running=true;
+    gw.dataset.step='form'; payEl.dataset.state='off';
+    gwBody.innerHTML=FORM; secsEl.textContent='4 segundos';
+    var f=gwBody.querySelectorAll('.field'), ms=140+Math.floor(Math.random()*90);
+
+    if(reduce){
+      [].forEach.call(gwBody.querySelectorAll('input[data-v]'),function(i){i.value=i.dataset.v});
+      f[0].classList.add('has-brand'); f[2].classList.add('filled'); payEl.dataset.state='on';
+      renderCode(false); renderTerm(ms); return;
+    }
+
+    renderCode(true);
+    var t=type(f[0],900,55);
+    t=type(f[1],t,75);
+    later(function(){f[2].classList.add('on')},t);
+    later(function(){f[2].classList.add('filled')},t+280);
+    later(function(){f[2].classList.remove('on')},t+520);
+    t=type(f[3],t+620,65);
+    t=type(f[4],t,65);
+    t=type(f[5],t,34);
+    later(function(){payEl.dataset.state='on'},t+150);
+    later(function(){payEl.dataset.state='press'},t+1050);
+    later(function(){gw.dataset.step='proc'; renderTerm(ms)},t+1250);
+    t+=3550;
+    later(function(){success(ms)},t);
+    [3,2,1].forEach(function(s,k){
+      later(function(){secsEl.textContent=s+(s===1?' segundo':' segundos')},t+1000*(k+1));
+    });
+    later(run,t+4000);
+  }
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ e[0].isIntersecting? (running||run()) : stop() }).observe(hero);
+  } else run();
+
+  /* ---- paralaje suave con el puntero ----
+     El equipo es una foto frontal: solo se desplaza con su capa, nada de
+     rotarlo, porque el grosor de la tapa está pintado desde el frente. */
+  var layers=[].slice.call(hero.querySelectorAll('[data-depth]'));
+  if(!reduce){
+    layers.forEach(function(l){l.style.transition='transform .4s cubic-bezier(.2,.7,.2,1)'});
+    hero.addEventListener('pointermove',function(e){
+      if(hero.classList.contains('izp-mobile')) return;
+      var r=hero.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      layers.forEach(function(l){
+        var d=+l.dataset.depth;
+        l.style.transform='translate('+(-x*d).toFixed(1)+'px,'+(-y*d).toFixed(1)+'px)';
+      });
+    });
+    hero.addEventListener('pointerleave',function(){
+      layers.forEach(function(l){l.style.transform=''});
+    });
+
+  }
+
+  run();
+  window.izipayHero={replay:run};
+})();
+</script>
+<!-- ======================= HERO: hasta aquí ======================= -->
+</body>
+</html>

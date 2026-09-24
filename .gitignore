@@ -1,0 +1,7 @@
+# Solo se publica la versión final del hero; PSD, capturas y borradores quedan locales.
+/*
+!/.gitignore
+!/vercel.json
+!/izipay-hero-v4.html
+!/assets/
+.vercel
