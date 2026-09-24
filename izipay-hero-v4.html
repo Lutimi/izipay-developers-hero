@@ -227,13 +227,11 @@ body{margin:0;background:#fff}
 .izp-ok.sm svg{width:18px;height:18px}
 
 /* ---------------------------------------------------------------- planta */
-.izp-plant{position:absolute;left:1102px;top:186px;width:234px;height:420px;filter:blur(1.9px) saturate(.9) brightness(.84)}
-/* las hojas viven en el sprite: la escena que no toca está en display:none y
-   <use> no cruza esa frontera si el original cuelga de ella */
-.izp-sprite{position:absolute;width:0;height:0;overflow:hidden}
-.izp-plant use,.izm-plant use{transform-origin:100px 262px;animation:izp-sway 7s ease-in-out infinite}
-@keyframes izp-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.4deg)}}
-.izp-plant-sh{position:absolute;left:1126px;top:588px;width:190px;height:38px;border-radius:50%;
+/* foto recortada: la base del macetero cae sobre la sombra, y el desenfoque
+   la deja detrás del equipo en profundidad de campo */
+.izp-plant{position:absolute;left:1081px;top:246px;width:275px;height:400px;filter:blur(1.4px) saturate(.92) brightness(.9)}
+.izp-plant img,.izm-plant img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+.izp-plant-sh{position:absolute;left:1134px;top:626px;width:170px;height:34px;border-radius:50%;
   background:radial-gradient(closest-side,rgba(8,26,30,.5),transparent);filter:blur(6px)}
 
 /* ---------------------------------------------------------------- taza */
@@ -536,8 +534,7 @@ body{margin:0;background:#fff}
 .izm-desk{position:absolute;left:-90px;right:-90px;top:676px;bottom:0;
   background:linear-gradient(180deg,#7f9397 0%,#687c80 45%,#55686c 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.35)}
 .izm-desk:after{content:"";position:absolute;inset:0;background:radial-gradient(52% 60% at 50% 0%,rgba(40,200,190,.22),transparent 70%)}
-.izm-plant{position:absolute;left:-92px;top:188px;width:152px;height:274px;filter:blur(.8px)}
-.izm-plant svg{width:100%;height:100%}
+.izm-plant{position:absolute;left:-100px;top:190px;width:186px;height:270px;filter:blur(.8px) brightness(.94)}
 
 /* ------------------------------------------------ iPhone 16 (render del PSD)
    Igual que la MacBook: el aparato es una foto, el contenido vive encima en
@@ -601,15 +598,6 @@ body{margin:0;background:#fff}
 
 <!-- ======================= HERO: copiar desde aquí ======================= -->
 <section class="izp-section" id="izpHero" aria-labelledby="izpTitle">
-  <svg class="izp-sprite" aria-hidden="true">
-  <defs>
-    <linearGradient id="izpL1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1f5c43"/><stop offset="1" stop-color="#5bb07e"/></linearGradient>
-    <linearGradient id="izpL2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#27704f"/><stop offset="1" stop-color="#7cc996"/></linearGradient>
-    <linearGradient id="izpL3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#184d38"/><stop offset="1" stop-color="#419a68"/></linearGradient>
-    <linearGradient id="izpPot" x1="0" x2="1"><stop offset="0" stop-color="#8d989c"/><stop offset=".35" stop-color="#d7dfe1"/><stop offset=".6" stop-color="#b9c4c7"/><stop offset="1" stop-color="#7c878b"/></linearGradient>
-    <g class="leaves" id="izpLeaves"><path d="M100 262 Q38.0 205.6 -27.2 182.5 Q22.1 231.0 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q37.5 222.3 -27.2 182.5" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q42.0 173.6 -27.1 120.8 Q18.2 195.0 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q37.9 191.4 -27.1 120.8" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q56.9 144.8 -5.6 63.3 Q26.9 160.7 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q49.0 162.7 -5.6 63.3" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q82.3 124.7 39.5 19.4 Q51.2 132.5 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q71.7 140.7 39.5 19.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q109.2 112.8 85.9 -7.6 Q75.3 114.6 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q94.9 127.2 85.9 -7.6" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q136.9 131.4 138.3 20.0 Q105.3 126.4 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q121.1 141.0 138.3 20.0" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q163.1 151.1 186.2 48.7 Q131.6 138.3 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q144.9 155.4 186.2 48.7" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q177.6 182.4 217.6 100.2 Q151.7 163.6 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q160.4 181.1 217.6 100.2" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q179.2 215.2 226.4 155.9 Q159.9 192.2 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q164.5 209.0 226.4 155.9" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q79.3 164.2 38.4 92.9 Q53.0 173.8 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q71.1 177.4 38.4 92.9" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q141.3 162.0 150.5 73.6 Q114.2 154.8 100 262Z" fill="url(#izpL2)"/><path d="M100 262 Q127.2 167.8 150.5 73.6" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q165.0 244.8 207.9 209.4 Q153.6 221.4 100 262Z" fill="url(#izpL3)"/><path d="M100 262 Q154.8 235.7 207.9 209.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/><path d="M100 262 Q47.3 230.0 -3.4 224.4 Q39.0 252.6 100 262Z" fill="url(#izpL1)"/><path d="M100 262 Q49.0 243.2 -3.4 224.4" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/></g>
-  </defs>
-  </svg>
 
   <div class="izp-scene" id="izpScene">
     <div class="izp-stage" id="izpStage">
@@ -620,14 +608,7 @@ body{margin:0;background:#fff}
 
       <div class="izp-props">
       <div class="izp-plant-sh"></div>
-      <div class="izp-plant" data-depth="3" aria-hidden="true">
-        <svg viewBox="0 0 200 360" width="200" height="360">
-          <use href="#izpLeaves"/>
-          <path d="M44 262 L156 262 L146 346 Q100 356 54 346 Z" fill="url(#izpPot)"/>
-          <ellipse cx="100" cy="262" rx="56" ry="10" fill="#aab5b8"/>
-          <ellipse cx="100" cy="263" rx="50" ry="7.5" fill="#3a2a1f"/>
-        </svg>
-      </div>
+      <div class="izp-plant" data-depth="3" aria-hidden="true"><img src="assets/hero/plant.webp" alt="" width="224" height="326"></div>
       </div>
 
       <div class="izp-desk"><span class="izp-tex"></span></div>
@@ -847,14 +828,7 @@ body{margin:0;background:#fff}
     <div class="izm-stage" id="izmStage">
       <div class="izm-wall"></div>
       <div class="izm-window"></div>
-      <div class="izm-plant" aria-hidden="true">
-        <svg viewBox="0 0 200 360">
-          <use href="#izpLeaves"/>
-          <path d="M44 262 L156 262 L146 346 Q100 356 54 346 Z" fill="url(#izpPot)"/>
-          <ellipse cx="100" cy="262" rx="56" ry="10" fill="#aab5b8"/>
-          <ellipse cx="100" cy="263" rx="50" ry="7.5" fill="#3a2a1f"/>
-        </svg>
-      </div>
+      <div class="izm-plant" aria-hidden="true"><img src="assets/hero/plant.webp" alt="" width="224" height="326"></div>
       <div class="izm-desk"></div>
 
       <div class="izm-phone" id="izmPhone">
