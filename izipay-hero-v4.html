@@ -29,46 +29,21 @@ body{margin:0;background:#fff}
    el origen cae sobre la línea de la mesa para que la base siga apoyada */
 .izp-props{position:absolute;inset:0;transform:scale(var(--props,.8));transform-origin:760px 640px}
 
-/* pared: luz de ventana cayendo desde arriba a la derecha */
-.izp-wall{position:absolute;inset:0;background:
-  radial-gradient(38% 46% at 82% 8%,rgba(255,255,255,.98),rgba(255,255,255,0) 72%),
-  radial-gradient(70% 60% at 18% 90%,rgba(96,140,146,.28),rgba(96,140,146,0) 70%),
-  linear-gradient(176deg,#e4f2f2 0%,#cfe6e6 48%,#bcd9da 78%,#aecfd1 100%)}
-/* mancha de humedad / textura muy sutil para que la pared no sea un degradado plano */
-.izp-wall:after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;background:
-  radial-gradient(28% 34% at 12% 22%,rgba(120,150,155,.16),transparent 70%),
-  radial-gradient(22% 26% at 46% 6%,rgba(120,150,155,.12),transparent 70%)}
-
-.izp-window{position:absolute;right:-70px;top:-90px;width:560px;height:600px;opacity:.5;filter:blur(22px);
-  background:
-   linear-gradient(90deg,transparent 0 45.4%,rgba(112,162,164,.5) 45.4% 49%,transparent 49%),
-   linear-gradient(180deg,transparent 0 43.6%,rgba(112,162,164,.5) 43.6% 47%,transparent 47%),
-   linear-gradient(158deg,#fff 0%,rgba(255,255,255,.28) 100%);
-  transform:skewX(-10deg)}
-/* haz de luz volumétrico desde la ventana hacia el escritorio */
-.izp-shaft{position:absolute;right:-40px;top:-120px;width:760px;height:860px;pointer-events:none;opacity:.5;
-  background:linear-gradient(196deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.12) 38%,rgba(255,255,255,0) 62%);
-  filter:blur(26px);transform:skewX(-14deg)}
-
-/* ---------------------------------------------------------------- escritorio */
-.izp-desk{position:absolute;left:0;right:0;top:637px;bottom:0;
-  background:linear-gradient(180deg,#93a9a9 0%,#7a9091 34%,#61797a 68%,#516868 100%);
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 14%,#000 30%);mask-image:linear-gradient(90deg,transparent 0,transparent 14%,#000 30%)}
-.izp-narrow .izp-desk{-webkit-mask-image:none;mask-image:none}
-/* canto del tablero: se enciende solo donde llega la luz de la ventana */
-.izp-desk:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
-  background:linear-gradient(90deg,transparent 0 24%,rgba(255,255,255,.34) 58%,rgba(255,255,255,.52) 84%,rgba(255,255,255,.18) 100%)}
-/* luz de la ventana sobre la mesa + rebote del monitor */
-.izp-desk:after{content:"";position:absolute;inset:0;background:
-  linear-gradient(104deg,transparent 0 48%,rgba(255,255,255,.16) 66%,rgba(255,255,255,.02) 80%,transparent 88%),
-  radial-gradient(42% 78% at 74% -6%,rgba(255,255,255,.4),transparent 72%),
-  radial-gradient(34% 56% at 52% 4%,rgba(20,163,159,.16),transparent 72%),
-  radial-gradient(60% 90% at 6% 100%,rgba(13,72,72,.28),transparent 72%)}
-/* micro-grano del tablero: evita el look de degradado CSS */
-.izp-grain,.izp-desk .izp-tex{
+/* fondo: foto de pared con arco y mesa blanca. Va alineada a la derecha del
+   escenario y a 800px de alto, que es lo que pone su línea de mesa (que cae
+   del 83% a la izquierda al 78.5% a la derecha) justo bajo la base del equipo.
+   A la izquierda de la foto sigue un relleno con sus mismos tonos para los
+   monitores muy anchos. */
+.izp-bg{position:absolute;top:0;right:0;left:-1400px;height:800px;
+  background:url(assets/hero/bg.webp) right top/auto 100% no-repeat,
+    linear-gradient(180deg,#eaf8f5 0%,#d1ebe9 60%,#e9efeb 82%,#f3f6f4 100%)}
+/* funde el borde izquierdo de la foto (1831px = 800 de alto × su proporción) con el relleno */
+.izp-bg:after{content:"";position:absolute;top:0;bottom:0;left:calc(100% - 1831px - 40px);width:520px;
+  background:linear-gradient(180deg,#eaf8f5 0%,#d1ebe9 60%,#e9efeb 82%,#f3f6f4 100%);
+  -webkit-mask-image:linear-gradient(90deg,#000 8%,transparent);mask-image:linear-gradient(90deg,#000 8%,transparent)}
+.izp-grain{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px 180px}
-.izp-desk .izp-tex{position:absolute;inset:0;opacity:.22;mix-blend-mode:overlay}
 
 /* capas de acabado sobre toda la escena */
 .izp-grain{position:absolute;inset:0;z-index:18;pointer-events:none;opacity:.05;mix-blend-mode:overlay}
@@ -227,12 +202,6 @@ body{margin:0;background:#fff}
 .izp-ok.sm svg{width:18px;height:18px}
 
 /* ---------------------------------------------------------------- planta */
-/* foto recortada: la base del macetero cae sobre la sombra, y el desenfoque
-   la deja detrás del equipo en profundidad de campo */
-.izp-plant{position:absolute;left:1081px;top:246px;width:275px;height:400px;filter:blur(1.4px) saturate(.92) brightness(.9)}
-.izp-plant img,.izm-plant img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
-.izp-plant-sh{position:absolute;left:1134px;top:626px;width:170px;height:34px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(8,26,30,.5),transparent);filter:blur(6px)}
 
 /* ---------------------------------------------------------------- taza */
 /* la escala va en la propiedad scale, no en transform: el paralaje escribe
@@ -526,15 +495,10 @@ body{margin:0;background:#fff}
 
 .izm-scene{position:relative;width:100%;overflow:hidden;-webkit-user-select:none;user-select:none}
 .izm-stage{position:absolute;left:0;top:0;width:390px;height:790px;transform-origin:0 0;perspective:1600px;perspective-origin:50% 40%}
-.izm-wall{position:absolute;inset:0 -90px;background:
-  radial-gradient(70% 45% at 70% 16%,rgba(255,255,255,.95),rgba(255,255,255,0) 70%),
-  linear-gradient(180deg,rgba(220,239,239,0) 0%,#cde6e6 30%,#bddcdc 70%)}
-.izm-window{position:absolute;right:-96px;top:-14px;width:220px;height:300px;opacity:.5;filter:blur(14px);transform:skewX(-10deg);
-  background:linear-gradient(90deg,transparent 0 46%,rgba(120,170,172,.45) 46% 50%,transparent 50%),linear-gradient(160deg,#fff,rgba(255,255,255,.3))}
-.izm-desk{position:absolute;left:-90px;right:-90px;top:676px;bottom:0;
-  background:linear-gradient(180deg,#7f9397 0%,#687c80 45%,#55686c 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.35)}
-.izm-desk:after{content:"";position:absolute;inset:0;background:radial-gradient(52% 60% at 50% 0%,rgba(40,200,190,.22),transparent 70%)}
-.izm-plant{position:absolute;left:-100px;top:190px;width:186px;height:270px;filter:blur(.8px) brightness(.94)}
+/* misma foto: el arco y su planta quedan detrás del teléfono y la línea de
+   mesa cae a la altura de su base */
+.izm-bg{position:absolute;top:0;left:-90px;right:-90px;height:850px;
+  background:url(assets/hero/bg.webp) right top/auto 100% no-repeat,#e3f2f1}
 
 /* ------------------------------------------------ iPhone 16 (render del PSD)
    Igual que la MacBook: el aparato es una foto, el contenido vive encima en
@@ -602,16 +566,7 @@ body{margin:0;background:#fff}
   <div class="izp-scene" id="izpScene">
     <div class="izp-stage" id="izpStage">
 
-      <div class="izp-wall"></div>
-      <div class="izp-window"></div>
-      <div class="izp-shaft"></div>
-
-      <div class="izp-props">
-      <div class="izp-plant-sh"></div>
-      <div class="izp-plant" data-depth="3" aria-hidden="true"><img src="assets/hero/plant.webp" alt="" width="224" height="326"></div>
-      </div>
-
-      <div class="izp-desk"><span class="izp-tex"></span></div>
+      <div class="izp-bg"></div>
 
       <div class="izp-props">
       <div class="izp-screenglow"></div>
@@ -826,10 +781,7 @@ body{margin:0;background:#fff}
   <!-- ------------------------------------------------ escena movil (<640px) -->
   <div class="izm-scene" id="izmScene">
     <div class="izm-stage" id="izmStage">
-      <div class="izm-wall"></div>
-      <div class="izm-window"></div>
-      <div class="izm-plant" aria-hidden="true"><img src="assets/hero/plant.webp" alt="" width="224" height="326"></div>
-      <div class="izm-desk"></div>
+      <div class="izm-bg"></div>
 
       <div class="izm-phone" id="izmPhone">
         <div class="sh"></div>
