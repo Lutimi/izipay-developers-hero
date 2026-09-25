@@ -181,84 +181,29 @@ body{margin:0;background:#fff}
 .izp-card{position:absolute;background:rgba(255,255,255,.97);border-radius:16px;z-index:10;color:var(--ink);
   box-shadow:0 30px 56px -26px rgba(10,48,54,.6),0 3px 10px rgba(12,70,76,.1),0 0 0 .5px rgba(255,255,255,.7) inset;
   will-change:transform}
-.izp-toast{left:300px;top:470px;width:232px;padding:14px 16px;display:flex;gap:13px;align-items:center}
-.izp-ok{flex:none;width:42px;height:42px;border-radius:12px;background:var(--teal);display:grid;place-items:center}
-.izp-ok svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20}
+/* las tres van en una fila sobre el mentón del equipo: mismo alto, mismo
+   ícono y misma línea superior, centradas respecto al display (x 686) */
+.izp-card{top:592px;height:72px;padding:0 16px 0 14px;display:flex;gap:12px;align-items:center}
+.izp-toast{left:318px;width:236px}
+.izp-key{left:572px;width:222px}
+.izp-api{left:812px;width:242px}
+.izp-ok{flex:none;width:40px;height:40px;border-radius:11px;background:var(--teal);display:grid;place-items:center}
+.izp-ok svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20}
+.izp-ok.code{font:700 14px/1 "JetBrains Mono",Consolas,monospace;color:#fff;letter-spacing:-.5px}
+.izp-card .tx{flex:1 1 0;min-width:0}
 .izp-toast.pop .izp-ok{animation:izp-pop .5s ease-out}
 .izp-toast.pop .izp-ok svg{animation:izp-draw .5s ease-out .1s both}
 @keyframes izp-pop{0%{transform:scale(.72)}55%{transform:scale(1.08)}100%{transform:scale(1)}}
 @keyframes izp-draw{from{stroke-dashoffset:20}to{stroke-dashoffset:0}}
 .izp-t1{font-size:13px;line-height:1.25}
-.izp-t2{font-size:19px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
-.izp-t3{font-size:11.5px;line-height:1.3;color:var(--mut)}
-.izp-api{left:880px;top:598px;width:224px;padding:14px 16px}
-.izp-api .izp-t1{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;font-weight:500}
-.izp-st{margin-top:9px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.izp-t2{margin-top:2px;font-size:16px;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+.izp-t2 small{font-size:11.5px;font-weight:400;color:var(--mut);letter-spacing:0}
+.izp-t3{margin-top:2px;font-size:11.5px;line-height:1.3;color:var(--mut)}
+.izp-api .izp-t1{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;font-weight:500}
+.izp-st{margin-top:4px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
 .izp-dot{width:9px;height:9px;border-radius:50%;background:var(--teal-2);animation:izp-ping 1.6s ease-out infinite}
 @keyframes izp-ping{0%{box-shadow:0 0 0 0 rgba(20,163,159,.55)}70%,100%{box-shadow:0 0 0 8px rgba(20,163,159,0)}}
 .izp-ms{margin-left:auto;font-size:11px;font-weight:400;color:var(--mut);font-variant-numeric:tabular-nums}
-.izp-key{left:432px;top:604px;width:auto;padding:12px 18px 12px 12px;display:flex;gap:12px;align-items:center}
-.izp-ok.sm{width:36px;height:36px;border-radius:50%}
-.izp-ok.sm svg{width:18px;height:18px}
-
-/* ---------------------------------------------------------------- planta */
-
-/* ---------------------------------------------------------------- taza */
-/* la escala va en la propiedad scale, no en transform: el paralaje escribe
-   transform en las capas con data-depth y lo borraria */
-.izp-mug{position:absolute;left:300px;top:545px;scale:.72;transform-origin:0 100%;width:170px;height:200px;filter:blur(.45px)}
-/* dos sombras: la difusa del ambiente y la oclusión pegada a la base */
-.izp-mug .sh{position:absolute;left:-30px;bottom:-16px;width:242px;height:44px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(4,14,17,.66),transparent 78%);filter:blur(7px)}
-.izp-mug .sh:after{content:"";position:absolute;left:24px;bottom:12px;width:190px;height:22px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(2,9,12,.85),transparent);filter:blur(2.5px)}
-
-/* asa: borde sólido (nada de máscaras, dan alfa parcial y la aclaran) + dos anillos
-   superpuestos que simulan el cilindro: filo de luz arriba-izquierda, sombra abajo */
-.izp-mug .handle{position:absolute;left:-55px;top:40px;width:84px;height:112px;border-radius:56px 0 0 56px;
-  border:17px solid #0f161d;border-right:none;
-  box-shadow:-4px 2px 8px rgba(0,0,0,.5)}
-.izp-mug .handle:before{content:"";position:absolute;left:-17px;top:-17px;right:-17px;bottom:-17px;
-  border-radius:inherit;border:17px solid transparent;border-right:none;
-  border-top-color:rgba(200,242,240,.24);border-left-color:rgba(200,242,240,.11)}
-.izp-mug .handle span{position:absolute;left:-17px;top:-17px;right:-17px;bottom:-17px;
-  border-radius:inherit;border:17px solid transparent;border-right:none;
-  border-bottom-color:rgba(0,0,0,.5)}
-
-/* cuerpo: cilindro con núcleo de sombra desplazado y rebote del escritorio */
-.izp-mug .body{position:absolute;left:0;top:14px;width:170px;height:186px;border-radius:0 0 50% 50%/0 0 26px 26px;
-  background:linear-gradient(90deg,#05080b 0%,#131a22 11%,#27323d 26%,#3a4753 36%,#222d38 54%,#121920 72%,#080c10 88%,#03050700 100%),
-             linear-gradient(90deg,#05080b,#0b1015);
-  display:grid;place-items:center;overflow:hidden}
-.izp-mug .logo{font:700 46px/1 "JetBrains Mono",Consolas,monospace;color:#1bb6ae;letter-spacing:-2px;
-  text-shadow:0 0 14px rgba(27,182,174,.4);transform:scaleX(.92) translateY(4px)}
-/* especular estrecho y brillante: es lo que lee como cerámica esmaltada */
-.izp-mug .gloss{position:absolute;left:19%;top:-4%;width:13%;height:108%;border-radius:50%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.42) 45%,rgba(255,255,255,.55) 55%,transparent);
-  filter:blur(3.5px)}
-/* luz rebotada: turquesa de la pantalla por la derecha; abajo va oscuro, no claro */
-.izp-mug .bounce{position:absolute;inset:0;
-  background:linear-gradient(272deg,rgba(66,214,205,.2),transparent 26%),
-             linear-gradient(0deg,rgba(2,6,9,.55),transparent 16%)}
-/* base: curva de apoyo, fundida con el cuerpo para que no parezca un disco aparte */
-.izp-mug .foot{position:absolute;left:2px;bottom:-7px;width:166px;height:18px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(5,9,12,.9),rgba(3,6,8,.98));filter:blur(1.6px)}
-
-/* borde: labio exterior con grosor + superficie del café */
-.izp-mug .rim{position:absolute;left:0;top:0;width:170px;height:30px;border-radius:50%;
-  background:linear-gradient(100deg,#3c4956 0%,#2a343e 40%,#1b232b 100%);
-  box-shadow:0 2px 0 rgba(0,0,0,.35)}
-.izp-mug .rim .lip{position:absolute;left:5px;top:2px;width:160px;height:26px;border-radius:50%;
-  background:linear-gradient(100deg,#0e141a,#161e26);box-shadow:inset 0 1.5px 0 rgba(214,248,246,.22)}
-.izp-mug .rim .coffee{position:absolute;left:10px;top:4px;width:150px;height:22px;border-radius:50%;
-  background:radial-gradient(64% 72% at 54% 60%,#56331d 0%,#2d1a10 68%,#140b06 100%);
-  box-shadow:inset 0 5px 8px rgba(0,0,0,.7)}
-/* reflejo de la ventana sobre el café */
-.izp-mug .rim .coffee:after{content:"";position:absolute;left:52%;top:14%;width:34%;height:34%;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(255,240,214,.3),transparent);filter:blur(3px)}
-.izp-steam{position:absolute;top:-70px;width:14px;height:80px;border-radius:14px;background:linear-gradient(transparent,rgba(255,255,255,.8));
-  filter:blur(6px);opacity:0;animation:izp-steam 3.6s ease-in infinite}
-@keyframes izp-steam{0%{transform:translateY(30px) scaleX(.6);opacity:0}40%{opacity:.62}100%{transform:translateY(-40px) scaleX(1.5) rotate(8deg);opacity:0}}
 
 /* =====================================================================
    PASARELA DE PAGO REAL (izipay-pasarela-pago.html)
@@ -301,7 +246,10 @@ body{margin:0;background:#fff}
 /* cuerpo */
 .izp-gw .scroll{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:10px var(--gwpad)}
 .izp-gw .btn-applepay{width:100%;height:43px;flex:none;border:0;padding:0;border-radius:4px;
-  background:var(--apple-black);display:grid;place-items:center;cursor:pointer}
+  background:var(--apple-black);display:grid;place-items:center;cursor:default}
+/* en la demo solo corre el flujo de tarjeta: Apple Pay se ve deshabilitado para no invitar al clic */
+.izp-gw .btn-applepay:disabled{background:#e9e9e9}
+.izp-gw .btn-applepay:disabled img{filter:brightness(0);opacity:.28}
 .izp-gw .btn-applepay img{width:56px;height:23px;display:block}
 .izp-gw .txt-nav{display:flex;align-items:center;gap:12px;width:100%;flex:none}
 .izp-gw .txt-nav .lnx{flex:1 1 0;min-width:0;height:1px;
@@ -440,10 +388,16 @@ body{margin:0;background:#fff}
   border-radius:999px;font:500 clamp(15px,1.2vw,18px)/1 Roboto,Arial,sans-serif;text-decoration:none;
   transition:background .2s,box-shadow .2s,transform .2s}
 .izp-btn:focus-visible{outline:3px solid var(--teal-2);outline-offset:3px}
-.izp-btn-p{background:var(--teal);color:#fff;box-shadow:0 12px 24px -14px rgba(14,133,132,.8)}
+/* los dos CTA tienen que ganarle al fondo fotográfico: principal con más
+   peso y sombra, secundario con borde teal pleno en lugar del gris verdoso */
+.izp-btn{font-weight:700;letter-spacing:.01em}
+.izp-btn-p{gap:10px;background:var(--teal);color:#fff;
+  box-shadow:0 16px 30px -14px rgba(11,111,110,.85),0 2px 6px rgba(11,111,110,.25),inset 0 1px 0 rgba(255,255,255,.18)}
+.izp-btn-p:after{content:"→";font-size:1.1em;line-height:1;transition:transform .2s}
 .izp-btn-p:hover{background:var(--teal-d);transform:translateY(-1px)}
-.izp-btn-s{background:#fff;color:var(--teal);box-shadow:0 0 0 1.5px #bfe0de}
-.izp-btn-s:hover{box-shadow:0 0 0 1.5px var(--teal-2)}
+.izp-btn-p:hover:after{transform:translateX(3px)}
+.izp-btn-s{background:rgba(255,255,255,.92);color:var(--teal-d);box-shadow:0 0 0 2px var(--teal),0 10px 22px -16px rgba(11,111,110,.6)}
+.izp-btn-s:hover{background:#fff;box-shadow:0 0 0 2px var(--teal-d),0 12px 24px -14px rgba(11,111,110,.6)}
 .izp-stats{display:flex;margin:0;padding:0}
 .izp-stats div{padding:0 clamp(18px,2.2vw,32px);border-left:1px solid #c5d8d8}
 .izp-stats div:first-child{padding-left:0;border-left:0}
@@ -455,6 +409,9 @@ body{margin:0;background:#fff}
 
 /* ---------------------------------------------------------------- responsive */
 .izp-section.izp-narrow{height:auto;display:flex;flex-direction:column}
+/* el recorte de tablet termina en x 1146: la foto se corre para que su planta
+   (desde x 1048 en escritorio) quede fuera */
+.izp-narrow .izp-bg{right:-120px}
 .izp-narrow .izp-scene{order:2;max-width:1000px;margin:0 auto;position:relative;inset:auto;width:100%;aspect-ratio:840/620}
 .izp-narrow .izp-copy{height:auto;padding-bottom:28px}
 .izp-narrow .izp-copy-main{max-width:none;margin:0}
@@ -617,35 +574,21 @@ body{margin:0;background:#fff}
       </div>
 
 
-      <div class="izp-mug" data-depth="9" aria-hidden="true">
-        <div class="sh"></div>
-        <span class="izp-steam" style="left:52px;animation-delay:0s"></span>
-        <span class="izp-steam" style="left:80px;animation-delay:1.2s"></span>
-        <span class="izp-steam" style="left:106px;animation-delay:2.4s"></span>
-        <div class="handle"><span></span></div>
-        <div class="body">
-          <span class="logo">&lt;/&gt;</span>
-          <span class="gloss"></span>
-          <span class="bounce"></span>
-          <span class="foot"></span>
-        </div>
-        <div class="rim"><span class="lip"></span><span class="coffee"></span></div>
-      </div>
-
       <!-- ------------------------------------------------ tarjetas flotantes -->
-      <div class="izp-card izp-toast" id="izpToast" data-depth="14" role="status" aria-live="polite">
+      <div class="izp-card izp-toast" id="izpToast" data-depth="12" role="status" aria-live="polite">
         <div class="izp-ok"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 11.5l4 4 8-9"/></svg></div>
-        <div><div class="izp-t1">Pago exitoso</div><div class="izp-t2">S/ 129.90</div><div class="izp-t3 izp-via">con tarjeta</div></div>
-      </div>
-
-      <div class="izp-card izp-api" data-depth="10">
-        <div class="izp-t1">POST /v1/payments</div>
-        <div class="izp-st"><span class="izp-dot"></span>201 Created<span class="izp-ms izp-msv">182 ms</span></div>
+        <div class="tx"><div class="izp-t1">Pago exitoso</div><div class="izp-t2">S/ 129.90 <small class="izp-via">con tarjeta</small></div></div>
       </div>
 
       <div class="izp-card izp-key" data-depth="12">
-        <div class="izp-ok sm"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 11.5l4 4 8-9"/></svg></div>
-        <div><div class="izp-t1"><b>API Key generada</b></div><div class="izp-t3">Lista para usar</div></div>
+        <div class="izp-ok"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 11.5l4 4 8-9"/></svg></div>
+        <div class="tx"><div class="izp-t1"><b>API Key generada</b></div><div class="izp-t3">Lista para usar</div></div>
+      </div>
+
+      <div class="izp-card izp-api" data-depth="12">
+        <div class="izp-ok code" aria-hidden="true">{ }</div>
+        <div class="tx"><div class="izp-t1">POST /v1/payments</div>
+        <div class="izp-st"><span class="izp-dot"></span>201 Created<span class="izp-ms izp-msv">182 ms</span></div></div>
       </div>
       </div>
 
@@ -672,7 +615,7 @@ body{margin:0;background:#fff}
             </header>
 
             <div class="scroll">
-              <button class="btn-applepay" type="button" tabindex="-1" aria-label="Pagar con Apple Pay">
+              <button class="btn-applepay" type="button" tabindex="-1" disabled aria-label="Pagar con Apple Pay (no disponible)">
                 <img src="assets/pasarela/49af3.svg" alt="Apple Pay">
               </button>
 
@@ -861,11 +804,11 @@ body{margin:0;background:#fff}
       mStage.style.transform='translate('+tx.toFixed(1)+'px,'+(-MT*m).toFixed(1)+'px) scale('+m+')';
       mScene.style.height=((MB-MT)*m).toFixed(1)+'px';
       /* la foto arranca en el borde superior de la sección y su mesa (79% de su
-         alto) cae en la y 671 del escenario; su borde derecho sale 24px de la
-         pantalla para que la planta asome recortada */
+         alto) cae en la y 671 del escenario; el borde de la pantalla corta la
+         foto en el 90.5% de su ancho, justo antes de la planta (91.7%) */
       var bh=(top+(671-MT)*m)/.79, bw=bh*BGR;
       hero.style.setProperty('--bgh',bh.toFixed(1)+'px');
-      hero.style.setProperty('--bgx',(mScene.clientWidth+24-bw).toFixed(1)+'px');
+      hero.style.setProperty('--bgx',(mScene.clientWidth-bw*.905).toFixed(1)+'px');
       hero.style.setProperty('--veil',top+'px');
     }else if(W>=BP){
       var s=scene.clientHeight/SH;
