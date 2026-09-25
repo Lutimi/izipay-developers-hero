@@ -2,6 +2,7 @@
 /*
 !/.gitignore
 !/.vercelignore
+!/README.md
 !/vercel.json
 !/izipay-hero-v4.html
 !/assets/
