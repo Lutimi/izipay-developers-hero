@@ -495,10 +495,13 @@ body{margin:0;background:#fff}
 
 .izm-scene{position:relative;width:100%;overflow:hidden;-webkit-user-select:none;user-select:none}
 .izm-stage{position:absolute;left:0;top:0;width:390px;height:790px;transform-origin:0 0;perspective:1600px;perspective-origin:50% 40%}
-/* misma foto: el arco y su planta quedan detrás del teléfono y la línea de
-   mesa cae a la altura de su base */
-.izm-bg{position:absolute;top:0;left:-90px;right:-90px;height:850px;
-  background:url(assets/hero/bg.webp) right top/auto 100% no-repeat,#e3f2f1}
+/* en móvil la foto es el fondo de toda la sección (texto, teléfono y cifras):
+   fit() la escala para que su línea de mesa caiga bajo la base del teléfono.
+   Arriba lleva un velo claro para que el titular se lea sobre el arco. */
+.izp-section.izp-mobile{background:
+  linear-gradient(180deg,rgba(238,247,247,.8) 0,rgba(238,247,247,.62) var(--veil,220px),rgba(238,247,247,0) calc(var(--veil,220px) + 170px)),
+  url(assets/hero/bg.webp) var(--bgx,100%) 0/auto var(--bgh,1150px) no-repeat,
+  #eef1ee}
 
 /* ------------------------------------------------ iPhone 16 (render del PSD)
    Igual que la MacBook: el aparato es una foto, el contenido vive encima en
@@ -781,8 +784,6 @@ body{margin:0;background:#fff}
   <!-- ------------------------------------------------ escena movil (<640px) -->
   <div class="izm-scene" id="izmScene">
     <div class="izm-stage" id="izmStage">
-      <div class="izm-bg"></div>
-
       <div class="izm-phone" id="izmPhone">
         <div class="sh"></div>
         <img class="dev" src="assets/hero/iphone.webp" alt="" width="1046" height="2159">
@@ -825,7 +826,7 @@ body{margin:0;background:#fff}
   var SW=1200, SH=760, BP=1280, MP=640;
   /* recorte en pantallas angostas: debe cubrir del toast al canto del equipo */
   var NX=306, NY=140, NW=840;
-  var MW=390, MH=790;
+  var MW=390, MT=8, MB=756, BGR=1897/829;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* La pasarela es un único nodo que viaja entre las dos escenas: del
@@ -852,9 +853,20 @@ body{margin:0;background:#fff}
     if(W<MP){
       /* tope en 1: agrandar la escena volveria a difuminar el texto de la
          pasarela, que es justo lo que se gana maquetandola a su tamano */
-      var m=Math.max(.55,Math.min(1,mScene.clientWidth/MW,viewH()/MH));
-      mStage.style.transform='translateX('+((mScene.clientWidth-MW*m)/2).toFixed(1)+'px) scale('+m+')';
-      mScene.style.height=(MH*m).toFixed(1)+'px';
+      /* texto + teléfono tienen que entrar juntos en el alto visible: la escena
+         solo muestra la franja MT..MB del escenario (el teléfono y su sombra) */
+      var top=mScene.offsetTop;
+      var m=Math.max(.5,Math.min(1,mScene.clientWidth/MW,(viewH()-top-8)/(MB-MT)));
+      var tx=(mScene.clientWidth-MW*m)/2;
+      mStage.style.transform='translate('+tx.toFixed(1)+'px,'+(-MT*m).toFixed(1)+'px) scale('+m+')';
+      mScene.style.height=((MB-MT)*m).toFixed(1)+'px';
+      /* la foto arranca en el borde superior de la sección y su mesa (79% de su
+         alto) cae en la y 671 del escenario; su borde derecho sale 24px de la
+         pantalla para que la planta asome recortada */
+      var bh=(top+(671-MT)*m)/.79, bw=bh*BGR;
+      hero.style.setProperty('--bgh',bh.toFixed(1)+'px');
+      hero.style.setProperty('--bgx',(mScene.clientWidth+24-bw).toFixed(1)+'px');
+      hero.style.setProperty('--veil',top+'px');
     }else if(W>=BP){
       var s=scene.clientHeight/SH;
       stage.style.transform='translate('+(W-SW*s)+'px,0) scale('+s+')';
